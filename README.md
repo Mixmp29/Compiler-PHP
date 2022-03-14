@@ -22,3 +22,17 @@ cC -> cc
 __S__ -> a __S__ BC -> aa __S__ BCBC -> aaab __CB__ CBC -> aaa __bB__ CCBC -> 
 -> aaabbC __CB__ C -> aaabb __CB__ CC -> aaab __bB__ CCC -> aaabb __bC__ CC ->
 -> aaabbb __cC__ C -> aaabbbc __cC__ -> aaabbbccc
+
+№ 2. Построить грамматику порождающую язык:
+
+a) L = {a^n b^m c^k | n,m,k > 0}
+
+G ({a, b, c}, {S, B, C}, P, S)
+
+P:
+S -> aS | aB
+B -> bB | bC
+C -> cC | c
+
+1) __S__ -> a __B__ -> ab __C__ -> abc
+2) __S__ -> a __S__ -> aa __B__ -> aab __B__ -> aabb __B__ -> aabbb __C__ -> aabbbc
