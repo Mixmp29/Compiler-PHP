@@ -1,0 +1,5 @@
+lexer/*.jar
+lexer/.vscode
+lexer/build
+lexer/cmake-build-debug
+lexer/cmake-build-release
