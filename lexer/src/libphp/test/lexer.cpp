@@ -168,4 +168,50 @@ TEST(LexerSuite, For) {
       "Loc=<2:0>	R_Brace '}'\n");
 }
 
+TEST(LexerSuite, If) {
+  std::stringstream in(
+      "if ($numberA % $i == 0 && $numberB % $i == 0) {\n"
+      "    $nod = $i;\n"
+      "    break;\n"
+      "}");
+
+  std::stringstream out;
+  dump_tokens(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "Loc=<1:0>	If 'if'\n"
+      "Loc=<1:3>	L_Paren '('\n"
+      "Loc=<1:4>	Dollar '$'\n"
+      "Loc=<1:5>	Id 'number'\n"
+      "Loc=<1:11>	Id 'A'\n"
+      "Loc=<1:13>	Mod '%'\n"
+      "Loc=<1:15>	Dollar '$'\n"
+      "Loc=<1:16>	Id 'i'\n"
+      "Loc=<1:18>	Equality '='\n"
+      "Loc=<1:19>	Equality '='\n"
+      "Loc=<1:21>	Value '0'\n"
+      "Loc=<1:23>	And '&&'\n"
+      "Loc=<1:26>	Dollar '$'\n"
+      "Loc=<1:27>	Id 'number'\n"
+      "Loc=<1:33>	Id 'B'\n"
+      "Loc=<1:35>	Mod '%'\n"
+      "Loc=<1:37>	Dollar '$'\n"
+      "Loc=<1:38>	Id 'i'\n"
+      "Loc=<1:40>	Equality '='\n"
+      "Loc=<1:41>	Equality '='\n"
+      "Loc=<1:43>	Value '0'\n"
+      "Loc=<1:44>	R_Paren ')'\n"
+      "Loc=<1:46>	L_Brace '{'\n"
+      "Loc=<2:4>	Dollar '$'\n"
+      "Loc=<2:5>	Id 'nod'\n"
+      "Loc=<2:9>	Equality '='\n"
+      "Loc=<2:11>	Dollar '$'\n"
+      "Loc=<2:12>	Id 'i'\n"
+      "Loc=<2:13>	Semicolon ';'\n"
+      "Loc=<3:4>	Break 'break'\n"
+      "Loc=<3:9>	Semicolon ';'\n"
+      "Loc=<4:0>	R_Brace '}'\n");
+}
+
 }  // namespace php::test
