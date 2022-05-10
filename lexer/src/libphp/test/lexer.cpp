@@ -214,4 +214,20 @@ TEST(LexerSuite, If) {
       "Loc=<4:0>	R_Brace '}'\n");
 }
 
+TEST(LexerSuite, Echo) {
+  std::stringstream in("echo \" наименьшое число \" . $min;");
+
+  std::stringstream out;
+  dump_tokens(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "Loc=<1:0>	Echo 'echo'\n"
+      "Loc=<1:5>	String '\" наименьшое число \"'\n"
+      "Loc=<1:26>	Point '.'\n"
+      "Loc=<1:28>	Dollar '$'\n"
+      "Loc=<1:29>	Id 'min'\n"
+      "Loc=<1:32>	Semicolon ';'\n");
+}
+
 }  // namespace php::test
