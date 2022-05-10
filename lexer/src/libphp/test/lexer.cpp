@@ -61,4 +61,15 @@ TEST(LexerSuite, MathExpr) {
       "Loc=<1:27>\tValue '5'\n");
 }
 
+TEST(LexerSuite, Foreach) {
+  std::stringstream in(
+      "foreach ($arr as &$value) {\n"
+      "    if ($min > $value) :\n"
+      "        $min = $value;\n"
+      "    endif;\n"
+      "}");
+
+  std::stringstream out;
+  dump_tokens(in, out);
+
 }  // namespace php::test
