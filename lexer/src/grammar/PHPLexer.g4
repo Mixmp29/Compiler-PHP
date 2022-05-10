@@ -28,4 +28,5 @@ L_Paren: '(';
 R_Paren: ')';
 L_Brace: '{';
 R_Brace: '}';
+WS : [ \t\r\n]+ -> skip;
 Error_Character: .;
