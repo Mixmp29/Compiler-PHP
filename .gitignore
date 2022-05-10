@@ -3,3 +3,4 @@ lexer/.vscode
 lexer/build
 lexer/cmake-build-debug
 lexer/cmake-build-release
+lexer/src/grammar/.antlr
