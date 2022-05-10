@@ -142,4 +142,30 @@ TEST(LexerSuite, Array) {
       "Loc=<3:1>	Sharp_Brackets_Right '>'\n");
 }
 
+TEST(LexerSuite, For) {
+  std::stringstream in(
+      "for ($i = 2;; ++$i) {\n"
+      "}");
+
+  std::stringstream out;
+  dump_tokens(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "Loc=<1:0>	For 'for'\n"
+      "Loc=<1:4>	L_Paren '('\n"
+      "Loc=<1:5>	Dollar '$'\n"
+      "Loc=<1:6>	Id 'i'\n"
+      "Loc=<1:8>	Equality '='\n"
+      "Loc=<1:10>	Value '2'\n"
+      "Loc=<1:11>	Semicolon ';'\n"
+      "Loc=<1:12>	Semicolon ';'\n"
+      "Loc=<1:14>	Increment '++'\n"
+      "Loc=<1:16>	Dollar '$'\n"
+      "Loc=<1:17>	Id 'i'\n"
+      "Loc=<1:18>	R_Paren ')'\n"
+      "Loc=<1:20>	L_Brace '{'\n"
+      "Loc=<2:0>	R_Brace '}'\n");
+}
+
 }  // namespace php::test
