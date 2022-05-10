@@ -79,7 +79,7 @@ TEST(LexerSuite, Foreach) {
       "Loc=<1:9>	Dollar '$'\n"
       "Loc=<1:10>	Id 'arr'\n"
       "Loc=<1:14>	As 'as'\n"
-      "Loc=<1:17>	Error_Character '&'\n"
+      "Loc=<1:17>	Link '&'\n"
       "Loc=<1:18>	Dollar '$'\n"
       "Loc=<1:19>	Id 'value'\n"
       "Loc=<1:24>	R_Paren ')'\n"
@@ -102,6 +102,44 @@ TEST(LexerSuite, Foreach) {
       "Loc=<4:4>	Endif 'endif'\n"
       "Loc=<4:9>	Semicolon ';'\n"
       "Loc=<5:0>	R_Brace '}'\n");
+}
+
+TEST(LexerSuite, Array) {
+  std::stringstream in(
+      "<?php\n"
+      "$arr = array(5, 3, 6, 1, 2, 3, 4);\n"
+      "?>");
+
+  std::stringstream out;
+  dump_tokens(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "Loc=<1:0>	Sharp_Brackets_Left '<'\n"
+      "Loc=<1:1>	Question_Mark '?'\n"
+      "Loc=<1:2>	Php 'php'\n"
+      "Loc=<2:0>	Dollar '$'\n"
+      "Loc=<2:1>	Id 'arr'\n"
+      "Loc=<2:5>	Equality '='\n"
+      "Loc=<2:7>	Array 'array'\n"
+      "Loc=<2:12>	L_Paren '('\n"
+      "Loc=<2:13>	Value '5'\n"
+      "Loc=<2:14>	Coma ','\n"
+      "Loc=<2:16>	Value '3'\n"
+      "Loc=<2:17>	Coma ','\n"
+      "Loc=<2:19>	Value '6'\n"
+      "Loc=<2:20>	Coma ','\n"
+      "Loc=<2:22>	Value '1'\n"
+      "Loc=<2:23>	Coma ','\n"
+      "Loc=<2:25>	Value '2'\n"
+      "Loc=<2:26>	Coma ','\n"
+      "Loc=<2:28>	Value '3'\n"
+      "Loc=<2:29>	Coma ','\n"
+      "Loc=<2:31>	Value '4'\n"
+      "Loc=<2:32>	R_Paren ')'\n"
+      "Loc=<2:33>	Semicolon ';'\n"
+      "Loc=<3:0>	Question_Mark '?'\n"
+      "Loc=<3:1>	Sharp_Brackets_Right '>'\n");
 }
 
 }  // namespace php::test
