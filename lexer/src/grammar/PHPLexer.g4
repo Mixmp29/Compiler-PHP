@@ -17,7 +17,7 @@ Question_Mark: '?';
 Dollar: '$';
 Mod: '%';
 Link: '&';
-Id: ([a-z] | [A-Z]) [A-Z]* [a-z]*;
+Id: [a-zA-Z] [a-zA-Z0-9]*;
 Value: '0' | [1-9][0-9]*;
 String: '"' ~ ["\n\r]* '"';
 Equality: '=';
