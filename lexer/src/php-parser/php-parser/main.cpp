@@ -43,9 +43,8 @@ int main(int argc, char** argv) {
       return 1;
     }
 
-    if (result.count(dump_tokens_opt) > 0) {
-      php::dump_tokens(input_stream, std::cout);
-    }
+    php::dump_tokens(input_stream, std::cout);
+
   } catch (const cxxopts::OptionException& e) {
     std::cerr << e.what() << "\n";
     return 1;
