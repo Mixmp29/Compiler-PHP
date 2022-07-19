@@ -44,18 +44,18 @@ TEST(LexerSuite, MathExpr) {
 
   EXPECT_EQ(
       out.str(),
-      "Loc=<1:0>\tL_PAREN '('\n"
+      "Loc=<1:0>\tLP '('\n"
       "Loc=<1:1>\tVALUE '13'\n"
       "Loc=<1:4>\tPLUS '+'\n"
       "Loc=<1:6>\tVALUE '15'\n"
-      "Loc=<1:9>\tDEFINITION '/'\n"
+      "Loc=<1:9>\tDEF '/'\n"
       "Loc=<1:11>\tVALUE '2'\n"
-      "Loc=<1:12>\tR_PAREN ')'\n"
-      "Loc=<1:14>\tMULTIPLICATION '*'\n"
+      "Loc=<1:12>\tRP ')'\n"
+      "Loc=<1:14>\tMUL '*'\n"
       "Loc=<1:16>\tVALUE '3'\n"
       "Loc=<1:18>\tMINUS '-'\n"
       "Loc=<1:20>\tVALUE '1'\n"
-      "Loc=<1:22>\tEQUALITY '='\n"
+      "Loc=<1:22>\tEQ '='\n"
       "Loc=<1:24>\tVALUE '60'\n"
       "Loc=<1:26>\tPOINT '.'\n"
       "Loc=<1:27>\tVALUE '5'\n");
@@ -75,33 +75,33 @@ TEST(LexerSuite, Foreach) {
   EXPECT_EQ(
       out.str(),
       "Loc=<1:0>	FOREACH 'foreach'\n"
-      "Loc=<1:8>	L_PAREN '('\n"
-      "Loc=<1:9>	DOLLAR '$'\n"
+      "Loc=<1:8>	LP '('\n"
+      "Loc=<1:9>	DOLL '$'\n"
       "Loc=<1:10>	ID 'arr'\n"
       "Loc=<1:14>	AS 'as'\n"
       "Loc=<1:17>	LINK '&'\n"
-      "Loc=<1:18>	DOLLAR '$'\n"
+      "Loc=<1:18>	DOLL '$'\n"
       "Loc=<1:19>	ID 'value'\n"
-      "Loc=<1:24>	R_PAREN ')'\n"
-      "Loc=<1:26>	L_BRACE '{'\n"
+      "Loc=<1:24>	RP ')'\n"
+      "Loc=<1:26>	LB '{'\n"
       "Loc=<2:4>	IF 'if'\n"
-      "Loc=<2:7>	L_PAREN '('\n"
-      "Loc=<2:8>	DOLLAR '$'\n"
+      "Loc=<2:7>	LP '('\n"
+      "Loc=<2:8>	DOLL '$'\n"
       "Loc=<2:9>	ID 'min'\n"
-      "Loc=<2:13>	SHARP_BRACKETS_RIGHT '>'\n"
-      "Loc=<2:15>	DOLLAR '$'\n"
+      "Loc=<2:13>	SBR '>'\n"
+      "Loc=<2:15>	DOLL '$'\n"
       "Loc=<2:16>	ID 'value'\n"
-      "Loc=<2:21>	R_PAREN ')'\n"
+      "Loc=<2:21>	RP ')'\n"
       "Loc=<2:23>	COLON ':'\n"
-      "Loc=<3:8>	DOLLAR '$'\n"
+      "Loc=<3:8>	DOLL '$'\n"
       "Loc=<3:9>	ID 'min'\n"
-      "Loc=<3:13>	EQUALITY '='\n"
-      "Loc=<3:15>	DOLLAR '$'\n"
+      "Loc=<3:13>	EQ '='\n"
+      "Loc=<3:15>	DOLL '$'\n"
       "Loc=<3:16>	ID 'value'\n"
-      "Loc=<3:21>	SEMICOLON ';'\n"
+      "Loc=<3:21>	SEMI ';'\n"
       "Loc=<4:4>	ENDIF 'endif'\n"
-      "Loc=<4:9>	SEMICOLON ';'\n"
-      "Loc=<5:0>	R_BRACE '}'\n");
+      "Loc=<4:9>	SEMI ';'\n"
+      "Loc=<5:0>	RB '}'\n");
 }
 
 TEST(LexerSuite, Array) {
@@ -115,14 +115,14 @@ TEST(LexerSuite, Array) {
 
   EXPECT_EQ(
       out.str(),
-      "Loc=<1:0>	SHARP_BRACKETS_LEFT '<'\n"
-      "Loc=<1:1>	QUESTION_MARK '?'\n"
+      "Loc=<1:0>	SBL '<'\n"
+      "Loc=<1:1>	QM '?'\n"
       "Loc=<1:2>	PHP 'php'\n"
-      "Loc=<2:0>	DOLLAR '$'\n"
+      "Loc=<2:0>	DOLL '$'\n"
       "Loc=<2:1>	ID 'arr'\n"
-      "Loc=<2:5>	EQUALITY '='\n"
+      "Loc=<2:5>	EQ '='\n"
       "Loc=<2:7>	ARRAY 'array'\n"
-      "Loc=<2:12>	L_PAREN '('\n"
+      "Loc=<2:12>	LP '('\n"
       "Loc=<2:13>	VALUE '5'\n"
       "Loc=<2:14>	COMMA ','\n"
       "Loc=<2:16>	VALUE '3'\n"
@@ -136,10 +136,10 @@ TEST(LexerSuite, Array) {
       "Loc=<2:28>	VALUE '3'\n"
       "Loc=<2:29>	COMMA ','\n"
       "Loc=<2:31>	VALUE '4'\n"
-      "Loc=<2:32>	R_PAREN ')'\n"
-      "Loc=<2:33>	SEMICOLON ';'\n"
-      "Loc=<3:0>	QUESTION_MARK '?'\n"
-      "Loc=<3:1>	SHARP_BRACKETS_RIGHT '>'\n");
+      "Loc=<2:32>	RP ')'\n"
+      "Loc=<2:33>	SEMI ';'\n"
+      "Loc=<3:0>	QM '?'\n"
+      "Loc=<3:1>	SBR '>'\n");
 }
 
 TEST(LexerSuite, For) {
@@ -153,19 +153,19 @@ TEST(LexerSuite, For) {
   EXPECT_EQ(
       out.str(),
       "Loc=<1:0>	FOR 'for'\n"
-      "Loc=<1:4>	L_PAREN '('\n"
-      "Loc=<1:5>	DOLLAR '$'\n"
+      "Loc=<1:4>	LP '('\n"
+      "Loc=<1:5>	DOLL '$'\n"
       "Loc=<1:6>	ID 'i'\n"
-      "Loc=<1:8>	EQUALITY '='\n"
+      "Loc=<1:8>	EQ '='\n"
       "Loc=<1:10>	VALUE '2'\n"
-      "Loc=<1:11>	SEMICOLON ';'\n"
-      "Loc=<1:12>	SEMICOLON ';'\n"
-      "Loc=<1:14>	INCREMENT '++'\n"
-      "Loc=<1:16>	DOLLAR '$'\n"
+      "Loc=<1:11>	SEMI ';'\n"
+      "Loc=<1:12>	SEMI ';'\n"
+      "Loc=<1:14>	INC '++'\n"
+      "Loc=<1:16>	DOLL '$'\n"
       "Loc=<1:17>	ID 'i'\n"
-      "Loc=<1:18>	R_PAREN ')'\n"
-      "Loc=<1:20>	L_BRACE '{'\n"
-      "Loc=<2:0>	R_BRACE '}'\n");
+      "Loc=<1:18>	RP ')'\n"
+      "Loc=<1:20>	LB '{'\n"
+      "Loc=<2:0>	RB '}'\n");
 }
 
 TEST(LexerSuite, If) {
@@ -181,35 +181,35 @@ TEST(LexerSuite, If) {
   EXPECT_EQ(
       out.str(),
       "Loc=<1:0>	IF 'if'\n"
-      "Loc=<1:3>	L_PAREN '('\n"
-      "Loc=<1:4>	DOLLAR '$'\n"
+      "Loc=<1:3>	LP '('\n"
+      "Loc=<1:4>	DOLL '$'\n"
       "Loc=<1:5>\tID 'numberA'\n"
       "Loc=<1:13>	MOD '%'\n"
-      "Loc=<1:15>	DOLLAR '$'\n"
+      "Loc=<1:15>	DOLL '$'\n"
       "Loc=<1:16>	ID 'i'\n"
-      "Loc=<1:18>	EQUALITY '='\n"
-      "Loc=<1:19>	EQUALITY '='\n"
+      "Loc=<1:18>	EQ '='\n"
+      "Loc=<1:19>	EQ '='\n"
       "Loc=<1:21>	VALUE '0'\n"
       "Loc=<1:23>	AND '&&'\n"
-      "Loc=<1:26>	DOLLAR '$'\n"
+      "Loc=<1:26>	DOLL '$'\n"
       "Loc=<1:27>	ID 'numberB'\n"
       "Loc=<1:35>	MOD '%'\n"
-      "Loc=<1:37>	DOLLAR '$'\n"
+      "Loc=<1:37>	DOLL '$'\n"
       "Loc=<1:38>	ID 'i'\n"
-      "Loc=<1:40>	EQUALITY '='\n"
-      "Loc=<1:41>	EQUALITY '='\n"
+      "Loc=<1:40>	EQ '='\n"
+      "Loc=<1:41>	EQ '='\n"
       "Loc=<1:43>	VALUE '0'\n"
-      "Loc=<1:44>	R_PAREN ')'\n"
-      "Loc=<1:46>	L_BRACE '{'\n"
-      "Loc=<2:4>	DOLLAR '$'\n"
+      "Loc=<1:44>	RP ')'\n"
+      "Loc=<1:46>	LB '{'\n"
+      "Loc=<2:4>	DOLL '$'\n"
       "Loc=<2:5>	ID 'nod'\n"
-      "Loc=<2:9>	EQUALITY '='\n"
-      "Loc=<2:11>	DOLLAR '$'\n"
+      "Loc=<2:9>	EQ '='\n"
+      "Loc=<2:11>	DOLL '$'\n"
       "Loc=<2:12>	ID 'i'\n"
-      "Loc=<2:13>	SEMICOLON ';'\n"
+      "Loc=<2:13>	SEMI ';'\n"
       "Loc=<3:4>	BREAK 'break'\n"
-      "Loc=<3:9>	SEMICOLON ';'\n"
-      "Loc=<4:0>	R_BRACE '}'\n");
+      "Loc=<3:9>	SEMI ';'\n"
+      "Loc=<4:0>	RB '}'\n");
 }
 
 TEST(LexerSuite, Echo) {
@@ -223,9 +223,9 @@ TEST(LexerSuite, Echo) {
       "Loc=<1:0>	ECHO 'echo'\n"
       "Loc=<1:5>	STRING '\" наименьшое число \"'\n"
       "Loc=<1:26>	POINT '.'\n"
-      "Loc=<1:28>	DOLLAR '$'\n"
+      "Loc=<1:28>	DOLL '$'\n"
       "Loc=<1:29>	ID 'min'\n"
-      "Loc=<1:32>	SEMICOLON ';'\n");
+      "Loc=<1:32>	SEMI ';'\n");
 }
 
 }  // namespace php::test
