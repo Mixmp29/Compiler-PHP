@@ -1,18 +1,14 @@
 grammar Php;
 
-document: element;
+document: SBL QM PHP elements QM SBR EOF;
 
-element: object | array | number | string;
+elements: statement*;
 
-object: SBL QM PHP QM SBR | SBL QM member (SEMI member)* QM SBR;
+statement: assigned SEMI;
 
-member: LINK ID EQ element;
+assigned: DOLL ID ASSIGN expression;
 
-array: LP RP | LP element (COMMA element)* RP;
-
-number: VALUE;
-
-string: STRING;
+expression: VALUE;
 
 PHP: 'php';
 BREAK: 'break';
@@ -21,9 +17,11 @@ ARRAY: 'array';
 FOREACH: 'foreach';
 AS: 'as';
 IF: 'if';
+ELSE: 'else';
 ENDIF: 'endif';
 ECHO: 'echo';
 AND: '&&';
+OR: '||';
 INC: '++';
 SBL: '<';
 SBR: '>';
@@ -34,7 +32,8 @@ LINK: '&';
 ID: [a-zA-Z] [a-zA-Z0-9]*;
 VALUE: '0' | [1-9][0-9]*;
 STRING: '"' ~ ["\n\r]* '"';
-EQ: '=';
+ASSIGN: '=';
+EQ: '==';
 SEMI: ';';
 COLON: ':';
 COMMA: ',';
