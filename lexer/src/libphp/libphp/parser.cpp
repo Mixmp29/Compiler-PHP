@@ -3,7 +3,6 @@
 #include <libphp/ast/XmlSerializer.hpp>
 #include <libphp/ast/detail/Builder.hpp>
 
-#include <PhpLexer.h>
 #include <PhpParser.h>
 
 #include <fmt/format.h>
@@ -32,9 +31,7 @@ class StreamErrorListener : public antlr4::BaseErrorListener {
 
 }  // namespace
 
-ParseResult parse(std::istream& in) {
-  antlr4::ANTLRInputStream stream(in);
-  PhpLexer lexer(&stream);
+ParseResult parse(PhpLexer& lexer) {
   antlr4::CommonTokenStream tokens(&lexer);
   PhpParser parser(&tokens);
 

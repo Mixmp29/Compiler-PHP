@@ -2,6 +2,8 @@
 
 #include <libphp/ast/Ast.hpp>
 
+#include <PhpLexer.h>
+
 #include <iosfwd>
 
 namespace php {
@@ -31,7 +33,7 @@ struct ParseResult {
   Errors errors_;
 };
 
-ParseResult parse(std::istream& in);
+ParseResult parse(PhpLexer& lexer);
 
 void dump_ast(ast::Document& document, std::ostream& out);
 void dump_errors(
