@@ -1,5 +1,8 @@
 #include <libphp/dump_tokens.hpp>
+#include <libphp/parser.hpp>
 
+#include <PhpLexer.h>
+#include <antlr4-runtime.h>
 #include <cxxopts.hpp>
 
 #include <fstream>
@@ -8,6 +11,7 @@
 
 const char* const file_path_opt = "file_path";
 const char* const dump_tokens_opt = "dump-tokens";
+const char* const dump_ast_opt = "dump-ast";
 
 int main(int argc, char** argv) {
   cxxopts::Options options("php-parser", "ANTLR4 php parser example");
@@ -19,6 +23,7 @@ int main(int argc, char** argv) {
     options.add_options()
         (file_path_opt, "", cxxopts::value<std::string>())
         (dump_tokens_opt, "")
+        (dump_ast_opt, "")
         ("h,help", "Print help");
     // clang-format on
   } catch (const cxxopts::OptionSpecException& e) {
@@ -43,7 +48,22 @@ int main(int argc, char** argv) {
       return 1;
     }
 
-    php::dump_tokens(input_stream, std::cout);
+    antlr4::ANTLRInputStream antlr_stream(input_stream);
+    PhpLexer lexer(&antlr_stream);
+    if (result.count(dump_tokens_opt) > 0) {
+      php::dump_tokens(lexer, std::cout);
+      return 0;
+    }
+    auto parser_result = php::parse(lexer);
+    if (result.count(dump_ast_opt) > 0) {
+      if (parser_result.errors_.empty()) {
+        php::dump_ast(parser_result.document_, std::cout);
+      }
+    }
+    if (!parser_result.errors_.empty()) {
+      php::dump_errors(parser_result.errors_, std::cerr);
+      return 1;
+    }
 
   } catch (const cxxopts::OptionException& e) {
     std::cerr << e.what() << "\n";
