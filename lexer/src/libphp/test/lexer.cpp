@@ -5,17 +5,23 @@
 #include <sstream>
 #include <string>
 
+namespace php::test {
+
+void dump_tokens_in(std::istream& in, std::ostream& out) {
+  antlr4::ANTLRInputStream stream(in);
+  PhpLexer lexer(&stream);
+  dump_tokens(lexer, out);
+}
+
 TEST(LexerSuite, JustTest) {
   EXPECT_EQ(42 + 1, 43);
 }
-
-namespace php::test {
 
 TEST(LexerSuite, ValidNumbers) {
   std::stringstream in("0 123456789");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -27,7 +33,7 @@ TEST(LexerSuite, ValidId) {
   std::stringstream in("a bNFDS fsddf");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -40,7 +46,7 @@ TEST(LexerSuite, MathExpr) {
   std::stringstream in("(13 + 15 / 2) * 3 - 1 = 60.5");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -70,7 +76,7 @@ TEST(LexerSuite, Foreach) {
       "}");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -111,7 +117,7 @@ TEST(LexerSuite, Array) {
       "?>");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -148,7 +154,7 @@ TEST(LexerSuite, For) {
       "}");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -176,7 +182,7 @@ TEST(LexerSuite, If) {
       "}");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
@@ -214,7 +220,7 @@ TEST(LexerSuite, Echo) {
   std::stringstream in("echo \" наименьшое число \" . $min;");
 
   std::stringstream out;
-  dump_tokens(in, out);
+  dump_tokens_in(in, out);
 
   EXPECT_EQ(
       out.str(),
