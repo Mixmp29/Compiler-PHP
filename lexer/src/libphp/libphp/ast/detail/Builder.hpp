@@ -3,13 +3,13 @@
 #include <libphp/ast/Ast.hpp>
 #include <libphp/parser.hpp>
 
-#include <PhpBaseVisitor.h>
+#include <PhpParserBaseVisitor.h>
 
 #include <any>
 
 namespace php::ast::detail {
 
-class Builder final : public PhpBaseVisitor {
+class Builder final : public PhpParserBaseVisitor {
  public:
   explicit Builder(ast::Document& document) : document_(document) {}
 
