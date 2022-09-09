@@ -1,27 +1,29 @@
-set(app_name php-parser)
+set(target_name php-parser)
 
-add_executable(${app_name})
+add_executable(${target_name})
 
-target_include_directories(${app_name} PRIVATE .)
+target_include_directories(${target_name} PRIVATE .)
 
 include(CompileOptions)
-json_target_set_compile_options(${app_name})
+json_target_set_compile_options(${target_name})
 
 target_sources(
-  ${app_name}
+  ${target_name}
   PRIVATE
-    ${app_name}/main.cpp
+    ${target_name}/main.cpp
 )
 
 target_link_libraries(
-  ${app_name}
+  ${target_name}
   PRIVATE
     cxxopts
     php
+    Php
+    antlr4
 )
 
 set_target_properties(
-  ${app_name}
+  ${target_name}
   PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

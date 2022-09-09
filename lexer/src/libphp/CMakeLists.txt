@@ -1,26 +1,39 @@
+set(target_name php)
 
-set(lib_name php)
-
-add_library(${lib_name})
+add_library(${target_name} STATIC)
 
 include(CompileOptions)
-json_target_set_compile_options(${lib_name})
-
-target_include_directories(${lib_name} PUBLIC .)
+json_target_set_compile_options(${target_name})
 
 target_sources(
-  ${lib_name}
+  ${target_name}
   PUBLIC
+    libphp/ast/Ast.hpp
+    libphp/ast/Visitor.hpp
+    libphp/ast/XmlSerializer.hpp
     libphp/dump_tokens.hpp
+    libphp/parser.hpp
   PRIVATE
+    libphp/ast/detail/Builder.cpp
+    libphp/ast/detail/Builder.hpp
+    libphp/ast/Ast.cpp
+    libphp/ast/XmlSerializer.cpp
     libphp/dump_tokens.cpp
+    libphp/parser.cpp
+)
+
+target_include_directories(
+  ${target_name} 
+  PUBLIC 
+    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 target_link_libraries(
-  ${lib_name}
+  ${target_name}
   PRIVATE
-    PHPLexer
+    Php
     fmt
+    pugixml
 )
 
 set(test_name libphp_test)
@@ -35,12 +48,15 @@ target_sources(
   ${test_name}
   PRIVATE
     test/lexer.cpp
+    test/parser.cpp
 )
 
 target_link_libraries(
   ${test_name}
   PRIVATE
-    ${lib_name}
+    ${target_name}
+    Php
+    php
     gtest
     gtest_main
 )
