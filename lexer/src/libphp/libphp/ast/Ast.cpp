@@ -20,16 +20,4 @@ void Expression::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
-/* void Array::accept(Visitor& visitor) {
-  visitor.visit(*this);
-}
-
-void String::accept(Visitor& visitor) {
-  visitor.visit(*this);
-}
-
-void Number::accept(Visitor& visitor) {
-  visitor.visit(*this);
-} */
-
 }  // namespace php::ast

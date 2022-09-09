@@ -85,36 +85,4 @@ class Expression final : public Node {
   std::string name_;
 };
 
-/* class Array final : public Value {
- public:
-  using Elements = std::vector<ast::Value*>;
-
-  explicit Array(Elements elements) : elements_(std::move(elements)) {}
-  const Elements& elements() const { return elements_; }
-  void accept(Visitor& visitor) override;
-
- private:
-  Elements elements_;
-};
-
-class String final : public Value {
- public:
-  explicit String(std::string text) : text_(std::move(text)) {}
-  const std::string& text() const { return text_; }
-  void accept(Visitor& visitor) override;
-
- private:
-  std::string text_;
-};
-
-class Number final : public Value {
- public:
-  explicit Number(std::string text) : text_(std::move(text)) {}
-  const std::string& text() const { return text_; }
-  void accept(Visitor& visitor) override;
-
- private:
-  std::string text_;
-}; */
-
 }  // namespace php::ast
