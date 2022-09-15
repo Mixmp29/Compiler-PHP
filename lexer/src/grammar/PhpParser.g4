@@ -8,7 +8,11 @@ document: SBL QM PHP elements QM SBR EOF;
 
 elements: statement*;
 
-statement: assigned SEMI;
+statement: colonizedElement;
+
+colonizedElement: elementWithColon SEMI;
+
+elementWithColon: assigned;
 
 assigned: DOLL ID ASSIGN expression;
 

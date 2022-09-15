@@ -21,8 +21,15 @@ void XmlSerializer::visit(Statement& value) {
   value.value()->accept(*this);
 }
 
+void XmlSerializer::visit(ElementWithColon& value) {
+  auto code = append_child("command");
+  nodes_.push(code);
+  value.value()->accept(*this);
+  nodes_.pop();
+}
+
 void XmlSerializer::visit(Assigned& value) {
-  auto code = append_child(" command ");
+  auto code = append_child(" assign ");
   nodes_.push(code);
   value.value()->accept(*this);
   nodes_.pop();

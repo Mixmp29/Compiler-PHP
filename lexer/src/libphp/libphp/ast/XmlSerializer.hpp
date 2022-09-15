@@ -15,6 +15,7 @@ class XmlSerializer final : public Visitor {
 
   void visit(Elements& value) override;
   void visit(Statement& value) override;
+  void visit(ElementWithColon& value) override;
   void visit(Assigned& value) override;
   void visit(Expression& value) override;
 

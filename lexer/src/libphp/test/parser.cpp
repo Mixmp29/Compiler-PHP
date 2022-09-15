@@ -31,7 +31,11 @@ TEST(ParserSuite, SimleExample) {
   EXPECT_EQ(
       out.str(),
       "<\?xml version=\"1.0\"\?>\n"
-      "<php>10000</php>\n");
+      "<php>\n"
+      "  <command>\n"
+      "    < assign >10000</ assign >\n"
+      "  </command>\n"
+      "</php>\n");
 }
 
 }  // namespace php::test

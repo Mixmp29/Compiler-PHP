@@ -12,6 +12,10 @@ void Statement::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void ElementWithColon::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Assigned::accept(Visitor& visitor) {
   visitor.visit(*this);
 }

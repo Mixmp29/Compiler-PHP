@@ -63,6 +63,17 @@ class Statement final : public Node {
   Node* value_;
 };
 
+class ElementWithColon final : public Node {
+ public:
+  explicit ElementWithColon(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
 class Assigned final : public Node {
  public:
   explicit Assigned(Node* value, int line, int column)

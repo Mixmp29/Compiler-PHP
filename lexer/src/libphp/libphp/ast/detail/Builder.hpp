@@ -16,6 +16,8 @@ class Builder final : public PhpParserBaseVisitor {
   std::any visitDocument(PhpParser::DocumentContext* context) override;
   std::any visitElements(PhpParser::ElementsContext* context) override;
   std::any visitStatement(PhpParser::StatementContext* context) override;
+  std::any visitColonizedElement(
+      PhpParser::ColonizedElementContext* context) override;
   std::any visitAssigned(PhpParser::AssignedContext* context) override;
   std::any visitExpression(PhpParser::ExpressionContext* context) override;
 
