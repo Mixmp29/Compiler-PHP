@@ -74,9 +74,44 @@ class ElementWithColon final : public Node {
   Node* value_;
 };
 
+class Echo final : public Node {
+ public:
+  explicit Echo(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
+class Print final : public Node {
+ public:
+  explicit Print(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
 class Assigned final : public Node {
  public:
-  explicit Assigned(Node* value, int line, int column)
+  explicit Assigned(Node* var, Node* val, int line, int column)
+      : Node(line, column), var_(var), val_(val) {}
+  Node* var() const { return var_; }
+  Node* val() const { return val_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* var_;
+  Node* val_;
+};
+
+class CodeBlock final : public Node {
+ public:
+  explicit CodeBlock(Node* value, int line, int column)
       : Node(line, column), value_(value) {}
   Node* value() const { return value_; }
   void accept(Visitor& visitor) override;

@@ -37,9 +37,35 @@ std::any Builder::visitColonizedElement(
       context->getStart()->getCharPositionInLine()));
 }
 
-std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
+std::any Builder::visitEcho(PhpParser::EchoContext* context) {
   auto* value = std::any_cast<Node*>(visitChildren(context));
+  return static_cast<Node*>(document_.create_node<Echo>(
+      value,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitPrint(PhpParser::PrintContext* context) {
+  auto* value = std::any_cast<Node*>(visitChildren(context));
+  return static_cast<Node*>(document_.create_node<Print>(
+      value,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
+  auto* var = std::any_cast<Node*>(visit(context->var()));
+  auto* val = std::any_cast<Node*>(visit(context->expr()));
   return static_cast<Node*>(document_.create_node<Assigned>(
+      var,
+      val,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitCodeBlock(PhpParser::CodeBlockContext* context) {
+  auto* value = std::any_cast<Node*>(visitChildren(context));
+  return static_cast<Node*>(document_.create_node<CodeBlock>(
       value,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));

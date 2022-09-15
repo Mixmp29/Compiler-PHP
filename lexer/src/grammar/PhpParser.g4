@@ -12,9 +12,15 @@ statement: colonizedElement;
 
 colonizedElement: elementWithColon SEMI;
 
-elementWithColon: assigned | expr;
+elementWithColon: echo | print | assigned | expr;
+
+echo: ECHO expr POINT expr | ECHO POINT expr;
+
+print: PRINT expr;
 
 assigned: var ASSIGN expr;
+
+codeBlock: LB elements RB;
 
 expr:
 	left = expr op = (MUL | DEF | MOD) right = expr	# opExpr
@@ -25,7 +31,7 @@ expr:
 	| LP expr RP									# parenExpr
 	| var											# atomExpr;
 
-var: DOLL ID | VALUE;
+var: DOLL ID | VALUE | STRING;
 
 //Критерии на тройку ввод, вывод, цикл, арифметика, переменная
 

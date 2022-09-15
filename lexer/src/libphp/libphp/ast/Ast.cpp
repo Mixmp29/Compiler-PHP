@@ -16,7 +16,19 @@ void ElementWithColon::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void Echo::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void Print::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Assigned::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void CodeBlock::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 

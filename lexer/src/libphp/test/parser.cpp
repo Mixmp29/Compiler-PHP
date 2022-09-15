@@ -23,7 +23,11 @@ void get_ast_from_stream(std::istream& in, std::ostream& out) {
 }
 
 TEST(ParserSuite, SimleExample) {
-  std::stringstream in("<\?php $min = 10000; \?>");
+  std::stringstream in(
+      "<\?php\n"
+      " $min = 10000;\n"
+      " print(\"mmm, such crespy ass\");\n"
+      "\?>");
 
   std::stringstream out;
   get_ast_from_stream(in, out);

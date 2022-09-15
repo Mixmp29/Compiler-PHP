@@ -10,6 +10,7 @@ IF: 'if';
 ELSE: 'else';
 ENDIF: 'endif';
 ECHO: 'echo';
+PRINT: 'print';
 AND: '&&';
 OR: '||';
 INC: '++';
