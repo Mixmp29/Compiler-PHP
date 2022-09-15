@@ -20,7 +20,31 @@ void Assigned::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
-void Expression::accept(Visitor& visitor) {
+void OpExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void StrExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void UPostExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void UPrefExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void ParenExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void AtomExpr::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void Var::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 

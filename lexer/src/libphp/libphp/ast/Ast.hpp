@@ -85,9 +85,87 @@ class Assigned final : public Node {
   Node* value_;
 };
 
-class Expression final : public Node {
+class OpExpr final : public Node {
  public:
-  explicit Expression(std::string& name, int line, int column)
+  explicit OpExpr(Node* lhs, std::string& op, Node* rhs, int line, int column)
+      : Node(line, column), lhs_(lhs), op_(std::move(op)), rhs_(rhs) {}
+  Node* lhs() const { return lhs_; }
+  const std::string& op() const { return op_; }
+  Node* rhs() const { return rhs_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* lhs_;
+  std::string op_;
+  Node* rhs_;
+};
+
+class StrExpr final : public Node {
+ public:
+  explicit StrExpr(Node* lhs, std::string& op, Node* rhs, int line, int column)
+      : Node(line, column), lhs_(lhs), op_(std::move(op)), rhs_(rhs) {}
+  Node* lhs() const { return lhs_; }
+  const std::string& op() const { return op_; }
+  Node* rhs() const { return rhs_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* lhs_;
+  std::string op_;
+  Node* rhs_;
+};
+
+class UPostExpr final : public Node {
+ public:
+  explicit UPostExpr(Node* value, std::string& op, int line, int column)
+      : Node(line, column), value_(value), op_(op) {}
+  Node* value() const { return value_; }
+  const std::string& op() const { return op_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+  std::string op_;
+};
+
+class UPrefExpr final : public Node {
+ public:
+  explicit UPrefExpr(Node* value, std::string& op, int line, int column)
+      : Node(line, column), value_(value), op_(op) {}
+  Node* value() const { return value_; }
+  const std::string& op() const { return op_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+  std::string op_;
+};
+
+class ParenExpr final : public Node {
+ public:
+  explicit ParenExpr(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
+class AtomExpr final : public Node {
+ public:
+  explicit AtomExpr(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
+class Var final : public Node {
+ public:
+  explicit Var(std::string& name, int line, int column)
       : Node(line, column), name_(std::move(name)) {}
   const std::string& name() const { return name_; }
   void accept(Visitor& visitor) override;

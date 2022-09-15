@@ -45,9 +45,69 @@ std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
-std::any Builder::visitExpression(PhpParser::ExpressionContext* context) {
+std::any Builder::visitOpExpr(PhpParser::OpExprContext* context) {
+  auto* lhs = std::any_cast<Node*>(visit(context->left));
+  auto op = context->op->getText();
+  auto* rhs = std::any_cast<Node*>(visit(context->right));
+  return static_cast<Node*>(document_.create_node<OpExpr>(
+      lhs,
+      op,
+      rhs,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitStrExpr(PhpParser::StrExprContext* context) {
+  auto* lhs = std::any_cast<Node*>(visit(context->left));
+  auto op = context->op->getText();
+  auto* rhs = std::any_cast<Node*>(visit(context->right));
+  return static_cast<Node*>(document_.create_node<StrExpr>(
+      lhs,
+      op,
+      rhs,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitUPostExpr(PhpParser::UPostExprContext* context) {
+  auto* value = std::any_cast<Node*>(visit(context->var()));
+  auto op = context->op->getText();
+  return static_cast<Node*>(document_.create_node<UPostExpr>(
+      value,
+      op,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitUPrefExpr(PhpParser::UPrefExprContext* context) {
+  auto* value = std::any_cast<Node*>(visit(context->var()));
+  auto op = context->op->getText();
+  return static_cast<Node*>(document_.create_node<UPrefExpr>(
+      value,
+      op,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitParenExpr(PhpParser::ParenExprContext* context) {
+  auto* value = std::any_cast<Node*>(visit(context->expr()));
+  return static_cast<Node*>(document_.create_node<ParenExpr>(
+      value,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitAtomExpr(PhpParser::AtomExprContext* context) {
+  auto* value = std::any_cast<Node*>(visit(context->var()));
+  return static_cast<Node*>(document_.create_node<AtomExpr>(
+      value,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitVar(PhpParser::VarContext* context) {
   auto name = context->getText();
-  return static_cast<Node*>(document_.create_node<Expression>(
+  return static_cast<Node*>(document_.create_node<Var>(
       name,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));

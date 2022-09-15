@@ -44,7 +44,49 @@ void XmlSerializer::append_text(const char* text) {
   text_node.set_value(text);
 }
 
-void XmlSerializer::visit(Expression& value) {
+void XmlSerializer::visit(OpExpr& value) {
+  append_text("(");
+  value.lhs()->accept(*this);
+  append_text(" ");
+  append_text(value.op().c_str());
+  append_text(" ");
+  value.rhs()->accept(*this);
+  append_text(")");
+}
+
+void XmlSerializer::visit(StrExpr& value) {
+  append_text("(");
+  value.lhs()->accept(*this);
+  append_text(" ");
+  append_text(value.op().c_str());
+  append_text(" ");
+  value.rhs()->accept(*this);
+  append_text(")");
+}
+
+void XmlSerializer::visit(UPostExpr& value) {
+  append_text("(");
+  value.value()->accept(*this);
+  append_text(value.op().c_str());
+  append_text(")");
+}
+
+void XmlSerializer::visit(UPrefExpr& value) {
+  append_text("(");
+  append_text(value.op().c_str());
+  value.value()->accept(*this);
+  append_text(")");
+}
+
+void XmlSerializer::visit(ParenExpr& value) {
+  value.value()->accept(*this);
+}
+
+void XmlSerializer::visit(AtomExpr& value) {
+  value.value()->accept(*this);
+}
+
+void XmlSerializer::visit(Var& value) {
   append_text(value.name().c_str());
 }
 

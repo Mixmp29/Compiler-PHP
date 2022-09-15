@@ -12,8 +12,21 @@ statement: colonizedElement;
 
 colonizedElement: elementWithColon SEMI;
 
-elementWithColon: assigned;
+elementWithColon: assigned | expr;
 
-assigned: DOLL ID ASSIGN expression;
+assigned: var ASSIGN expr;
 
-expression: VALUE;
+expr:
+	left = expr op = (MUL | DEF | MOD) right = expr	# opExpr
+	| left = expr op = (PLUS | MINUS) right = expr	# opExpr
+	| left = expr op = (POINT | REP) right = expr	# strExpr
+	| var op = (INC | DEC)							# uPostExpr
+	| op = (INC | DEC) var							# uPrefExpr
+	| LP expr RP									# parenExpr
+	| var											# atomExpr;
+
+var: DOLL ID | VALUE;
+
+//Критерии на тройку ввод, вывод, цикл, арифметика, переменная
+
+//На четвеёрку функция, массив
