@@ -7,6 +7,10 @@
     {
         $numberB = $numberB + 8;
     }
+    else
+    {
+        $numberA = $numberA + 8;
+    }
 
     $numberB = $numberB + 15;
 

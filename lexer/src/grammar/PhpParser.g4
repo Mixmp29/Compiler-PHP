@@ -8,7 +8,7 @@ document: SBL QM PHP elements QM SBR EOF;
 
 elements: statement*;
 
-statement: colonizedElement | ifState;
+statement: colonizedElement | ifState | elseState;
 
 colonizedElement: elementWithColon SEMI;
 
@@ -19,6 +19,8 @@ echo: ECHO expr POINT expr | ECHO POINT expr;
 print: PRINT expr;
 
 ifState: IF LP comparison RP codeBlock;
+
+elseState: ELSE codeBlock;
 
 assigned: var ASSIGN expr;
 

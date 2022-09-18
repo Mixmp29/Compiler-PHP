@@ -63,6 +63,14 @@ std::any Builder::visitIfState(PhpParser::IfStateContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
+std::any Builder::visitElseState(PhpParser::ElseStateContext* context) {
+  auto* codeBlock = std::any_cast<Node*>(visit(context->codeBlock()));
+  return static_cast<Node*>(document_.create_node<ElseState>(
+      codeBlock,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
 std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
   auto* var = std::any_cast<Node*>(visit(context->var()));
   auto* val = std::any_cast<Node*>(visit(context->expr()));

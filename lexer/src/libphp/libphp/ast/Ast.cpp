@@ -28,6 +28,10 @@ void IfState::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void ElseState::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Assigned::accept(Visitor& visitor) {
   visitor.visit(*this);
 }

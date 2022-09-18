@@ -109,6 +109,17 @@ class IfState final : public Node {
   Node* codeBlock_;
 };
 
+class ElseState final : public Node {
+ public:
+  explicit ElseState(Node* codeBlock, int line, int column)
+      : Node(line, column), codeBlock_(codeBlock) {}
+  Node* codeBlock() const { return codeBlock_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* codeBlock_;
+};
+
 class Assigned final : public Node {
  public:
   explicit Assigned(Node* var, Node* val, int line, int column)
