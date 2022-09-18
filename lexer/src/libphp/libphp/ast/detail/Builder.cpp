@@ -53,6 +53,16 @@ std::any Builder::visitPrint(PhpParser::PrintContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
+std::any Builder::visitIfElse(PhpParser::IfElseContext* context) {
+  auto* ifState = std::any_cast<Node*>(visit(context->ifState()));
+  auto* elseState = std::any_cast<Node*>(visit(context->elseState()));
+  return static_cast<Node*>(document_.create_node<IfElse>(
+      ifState,
+      elseState,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
 std::any Builder::visitIfState(PhpParser::IfStateContext* context) {
   auto* comparison = std::any_cast<Node*>(visit(context->comparison()));
   auto* codeBlock = std::any_cast<Node*>(visit(context->codeBlock()));

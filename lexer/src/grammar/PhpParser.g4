@@ -8,7 +8,7 @@ document: SBL QM PHP elements QM SBR EOF;
 
 elements: statement*;
 
-statement: colonizedElement | ifState | elseState;
+statement: colonizedElement | ifElse | ifState | codeBlock;
 
 colonizedElement: elementWithColon SEMI;
 
@@ -17,6 +17,8 @@ elementWithColon: echo | print | assigned | expr;
 echo: ECHO expr POINT expr | ECHO POINT expr;
 
 print: PRINT expr;
+
+ifElse: ifState elseState;
 
 ifState: IF LP comparison RP codeBlock;
 
@@ -35,13 +37,12 @@ expr:
 	| LP expr RP									# parenExpr
 	| var											# atomExpr;
 
-comparison:
-	left = expr condition right = expr; // не добавил в код
+comparison: left = expr condition right = expr;
 
 var: DOLL ID | VALUE | STRING;
 
 condition: SBL | SBR | SBLE | SBRE | EQ | NE;
 
-//Критерии на тройку ввод, вывод, цикл, арифметика, переменная
+//Критерии на тройку: ввод, -вывод-, цикл, -арифметика-, -переменная-, строки
 
-//На четвеёрку функция, массив
+//На четвеёрку: функция, массив

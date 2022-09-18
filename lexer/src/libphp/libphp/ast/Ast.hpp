@@ -96,6 +96,19 @@ class Print final : public Node {
   Node* value_;
 };
 
+class IfElse final : public Node {
+ public:
+  explicit IfElse(Node* ifState, Node* elseState, int line, int column)
+      : Node(line, column), ifState_(ifState), elseState_(elseState) {}
+  Node* ifState() const { return ifState_; }
+  Node* elseState() const { return elseState_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* ifState_;
+  Node* elseState_;
+};
+
 class IfState final : public Node {
  public:
   explicit IfState(Node* comparison, Node* codeBlock, int line, int column)

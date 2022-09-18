@@ -68,6 +68,14 @@ void XmlSerializer::visit(OpExpr& value) {
   append_text(")");
 }
 
+void XmlSerializer::visit(IfElse& value) {
+  auto code = append_child("if_else_state");
+  nodes_.push(code);
+  value.ifState()->accept(*this);
+  value.elseState()->accept(*this);
+  nodes_.pop();
+}
+
 void XmlSerializer::visit(IfState& value) {
   auto code = append_child("if");
   nodes_.push(code);

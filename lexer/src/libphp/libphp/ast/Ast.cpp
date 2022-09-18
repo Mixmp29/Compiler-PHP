@@ -24,6 +24,10 @@ void Print::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void IfElse::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void IfState::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
