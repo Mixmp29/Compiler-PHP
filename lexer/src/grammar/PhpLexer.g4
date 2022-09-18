@@ -11,6 +11,8 @@ ELSE: 'else';
 ENDIF: 'endif';
 ECHO: 'echo';
 PRINT: 'print';
+FGETS: 'fgets';
+STDIN: 'STDIN';
 AND: '&&';
 OR: '||';
 INC: '++';

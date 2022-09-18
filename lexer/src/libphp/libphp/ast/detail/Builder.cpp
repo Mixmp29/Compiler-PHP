@@ -53,6 +53,12 @@ std::any Builder::visitPrint(PhpParser::PrintContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
+std::any Builder::visitInput(PhpParser::InputContext* context) {
+  return static_cast<Node*>(document_.create_node<Input>(
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
 std::any Builder::visitIfElse(PhpParser::IfElseContext* context) {
   auto* ifState = std::any_cast<Node*>(visit(context->ifState()));
   auto* elseState = std::any_cast<Node*>(visit(context->elseState()));
@@ -172,9 +178,9 @@ std::any Builder::visitComparison(PhpParser::ComparisonContext* context) {
 }
 
 std::any Builder::visitVar(PhpParser::VarContext* context) {
-  auto name = context->getText();
+  auto* value = std::any_cast<Node*>(visitChildren(context));
   return static_cast<Node*>(document_.create_node<Var>(
-      name,
+      value,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));
 }
@@ -182,6 +188,30 @@ std::any Builder::visitVar(PhpParser::VarContext* context) {
 std::any Builder::visitCondition(PhpParser::ConditionContext* context) {
   auto name = context->getText();
   return static_cast<Node*>(document_.create_node<Condition>(
+      name,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitId(PhpParser::IdContext* context) {
+  auto name = context->getText();
+  return static_cast<Node*>(document_.create_node<Id>(
+      name,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitValue(PhpParser::ValueContext* context) {
+  auto name = context->getText();
+  return static_cast<Node*>(document_.create_node<Value>(
+      name,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitString(PhpParser::StringContext* context) {
+  auto name = context->getText();
+  return static_cast<Node*>(document_.create_node<String>(
       name,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));

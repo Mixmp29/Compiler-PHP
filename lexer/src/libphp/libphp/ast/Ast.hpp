@@ -96,6 +96,14 @@ class Print final : public Node {
   Node* value_;
 };
 
+class Input final : public Node {
+ public:
+  explicit Input(int line, int column) : Node(line, column) {}
+  void accept(Visitor& visitor) override;
+
+ private:
+};
+
 class IfElse final : public Node {
  public:
   explicit IfElse(Node* ifState, Node* elseState, int line, int column)
@@ -252,7 +260,18 @@ class Comparison final : public Node {
 
 class Var final : public Node {
  public:
-  explicit Var(std::string& name, int line, int column)
+  explicit Var(Node* value, int line, int column)
+      : Node(line, column), value_(value) {}
+  Node* value() const { return value_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* value_;
+};
+
+class Condition final : public Node {
+ public:
+  explicit Condition(std::string& name, int line, int column)
       : Node(line, column), name_(std::move(name)) {}
   const std::string& name() const { return name_; }
   void accept(Visitor& visitor) override;
@@ -261,9 +280,31 @@ class Var final : public Node {
   std::string name_;
 };
 
-class Condition final : public Node {
+class Id final : public Node {
  public:
-  explicit Condition(std::string& name, int line, int column)
+  explicit Id(std::string& name, int line, int column)
+      : Node(line, column), name_(std::move(name)) {}
+  const std::string& name() const { return name_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  std::string name_;
+};
+
+class Value final : public Node {
+ public:
+  explicit Value(std::string& name, int line, int column)
+      : Node(line, column), name_(std::move(name)) {}
+  const std::string& name() const { return name_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  std::string name_;
+};
+
+class String final : public Node {
+ public:
+  explicit String(std::string& name, int line, int column)
       : Node(line, column), name_(std::move(name)) {}
   const std::string& name() const { return name_; }
   void accept(Visitor& visitor) override;

@@ -17,6 +17,7 @@ elementWithColon: echo | print | assigned | expr;
 echo: ECHO expr POINT expr | ECHO POINT expr;
 
 print: PRINT expr;
+input: FGETS LP STDIN RP;
 
 ifElse: ifState elseState;
 
@@ -39,10 +40,16 @@ expr:
 
 comparison: left = expr condition right = expr;
 
-var: DOLL ID | VALUE | STRING;
+var: id | value | string | input;
 
 condition: SBL | SBR | SBLE | SBRE | EQ | NE;
 
-//Критерии на тройку: ввод, -вывод-, цикл, -арифметика-, -переменная-, строки
+id: DOLL ID;
+
+value: VALUE;
+
+string: STRING;
+
+//Критерии на тройку: -ввод-, -вывод-, цикл, -арифметика-, -переменная-, строки
 
 //На четвеёрку: функция, массив

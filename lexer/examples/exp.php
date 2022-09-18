@@ -1,6 +1,6 @@
 <?php
     $min = 10000; 
-    $numberA = 24;
+    $numberA = fgets(STDIN);
     $numberB = 21;
 
     if($numberA > $numberB)

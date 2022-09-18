@@ -20,6 +20,7 @@ class Builder final : public PhpParserBaseVisitor {
       PhpParser::ColonizedElementContext* context) override;
   std::any visitEcho(PhpParser::EchoContext* context) override;
   std::any visitPrint(PhpParser::PrintContext* context) override;
+  std::any visitInput(PhpParser::InputContext* context) override;
   std::any visitIfElse(PhpParser::IfElseContext* context) override;
   std::any visitIfState(PhpParser::IfStateContext* context) override;
   std::any visitElseState(PhpParser::ElseStateContext* context) override;
@@ -34,6 +35,9 @@ class Builder final : public PhpParserBaseVisitor {
   std::any visitComparison(PhpParser::ComparisonContext* context) override;
   std::any visitVar(PhpParser::VarContext* context) override;
   std::any visitCondition(PhpParser::ConditionContext* context) override;
+  std::any visitId(PhpParser::IdContext* context) override;
+  std::any visitValue(PhpParser::ValueContext* context) override;
+  std::any visitString(PhpParser::StringContext* context) override;
 
  private:
   ast::Document& document_;

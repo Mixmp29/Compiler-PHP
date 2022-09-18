@@ -42,6 +42,10 @@ void XmlSerializer::visit(Print& value) {
   nodes_.pop();
 }
 
+void XmlSerializer::visit(Input& /*value*/) {
+  append_text("input");
+}
+
 void XmlSerializer::visit(Assigned& value) {
   auto code = append_child("assign");
   nodes_.push(code);
@@ -135,10 +139,22 @@ void XmlSerializer::visit(Comparison& value) {
 }
 
 void XmlSerializer::visit(Var& value) {
-  append_text(value.name().c_str());
+  value.value()->accept(*this);
 }
 
 void XmlSerializer::visit(Condition& value) {
+  append_text(value.name().c_str());
+}
+
+void XmlSerializer::visit(Id& value) {
+  append_text(value.name().c_str());
+}
+
+void XmlSerializer::visit(Value& value) {
+  append_text(value.name().c_str());
+}
+
+void XmlSerializer::visit(String& value) {
   append_text(value.name().c_str());
 }
 

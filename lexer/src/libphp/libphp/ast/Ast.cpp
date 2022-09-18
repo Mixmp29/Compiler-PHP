@@ -24,6 +24,10 @@ void Print::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void Input::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void IfElse::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
@@ -77,6 +81,18 @@ void Var::accept(Visitor& visitor) {
 }
 
 void Condition::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void Id::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void Value::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void String::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
