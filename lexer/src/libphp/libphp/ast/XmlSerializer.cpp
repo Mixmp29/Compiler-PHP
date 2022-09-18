@@ -68,6 +68,14 @@ void XmlSerializer::visit(OpExpr& value) {
   append_text(")");
 }
 
+void XmlSerializer::visit(IfState& value) {
+  auto code = append_child("if");
+  nodes_.push(code);
+  value.comparison()->accept(*this);
+  value.codeBlock()->accept(*this);
+  nodes_.pop();
+}
+
 void XmlSerializer::visit(StrExpr& value) {
   append_text("(");
   value.lhs()->accept(*this);
@@ -100,7 +108,22 @@ void XmlSerializer::visit(AtomExpr& value) {
   value.value()->accept(*this);
 }
 
+void XmlSerializer::visit(Comparison& value) {
+  auto code = append_child("comparison");
+  nodes_.push(code);
+  value.lhs()->accept(*this);
+  append_text(" ");
+  value.op()->accept(*this);
+  append_text(" ");
+  value.rhs()->accept(*this);
+  nodes_.pop();
+}
+
 void XmlSerializer::visit(Var& value) {
+  append_text(value.name().c_str());
+}
+
+void XmlSerializer::visit(Condition& value) {
   append_text(value.name().c_str());
 }
 

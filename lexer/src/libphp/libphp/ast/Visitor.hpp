@@ -11,6 +11,7 @@ class Visitor {
   virtual void visit(ElementWithColon& value) = 0;
   virtual void visit(Echo& value) = 0;
   virtual void visit(Print& value) = 0;
+  virtual void visit(IfState& value) = 0;
   virtual void visit(Assigned& value) = 0;
   virtual void visit(CodeBlock& value) = 0;
   virtual void visit(OpExpr& value) = 0;
@@ -19,7 +20,9 @@ class Visitor {
   virtual void visit(UPrefExpr& value) = 0;
   virtual void visit(ParenExpr& value) = 0;
   virtual void visit(AtomExpr& value) = 0;
+  virtual void visit(Comparison& value) = 0;
   virtual void visit(Var& value) = 0;
+  virtual void visit(Condition& value) = 0;
 };
 
 }  // namespace php::ast

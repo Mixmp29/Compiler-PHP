@@ -53,6 +53,16 @@ std::any Builder::visitPrint(PhpParser::PrintContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
+std::any Builder::visitIfState(PhpParser::IfStateContext* context) {
+  auto* comparison = std::any_cast<Node*>(visit(context->comparison()));
+  auto* codeBlock = std::any_cast<Node*>(visit(context->codeBlock()));
+  return static_cast<Node*>(document_.create_node<IfState>(
+      comparison,
+      codeBlock,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
 std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
   auto* var = std::any_cast<Node*>(visit(context->var()));
   auto* val = std::any_cast<Node*>(visit(context->expr()));
@@ -64,7 +74,7 @@ std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
 }
 
 std::any Builder::visitCodeBlock(PhpParser::CodeBlockContext* context) {
-  auto* value = std::any_cast<Node*>(visitChildren(context));
+  auto* value = std::any_cast<Node*>(visitChildren(context->elements()));
   return static_cast<Node*>(document_.create_node<CodeBlock>(
       value,
       context->getStart()->getLine(),
@@ -131,9 +141,29 @@ std::any Builder::visitAtomExpr(PhpParser::AtomExprContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
+std::any Builder::visitComparison(PhpParser::ComparisonContext* context) {
+  auto* lhs = std::any_cast<Node*>(visit(context->left));
+  auto* rhs = std::any_cast<Node*>(visit(context->right));
+  auto* op = std::any_cast<Node*>(visit(context->condition()));
+  return static_cast<Node*>(document_.create_node<Comparison>(
+      lhs,
+      op,
+      rhs,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
 std::any Builder::visitVar(PhpParser::VarContext* context) {
   auto name = context->getText();
   return static_cast<Node*>(document_.create_node<Var>(
+      name,
+      context->getStart()->getLine(),
+      context->getStart()->getCharPositionInLine()));
+}
+
+std::any Builder::visitCondition(PhpParser::ConditionContext* context) {
+  auto name = context->getText();
+  return static_cast<Node*>(document_.create_node<Condition>(
       name,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));

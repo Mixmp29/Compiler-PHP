@@ -3,7 +3,14 @@
     $numberA = 24;
     $numberB = 21;
 
-    print("mmm, such crespy ass");
-    echo " наименьшое число " . $min;
+    if($numberA > $numberB)
+    {
+        $numberB = $numberB + 8;
+    }
+
+    $numberB = $numberB + 15;
+
+    print("He is such good person");
+    echo " Число B равно " . $min;
 
 ?>

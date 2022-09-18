@@ -96,6 +96,19 @@ class Print final : public Node {
   Node* value_;
 };
 
+class IfState final : public Node {
+ public:
+  explicit IfState(Node* comparison, Node* codeBlock, int line, int column)
+      : Node(line, column), comparison_(comparison), codeBlock_(codeBlock) {}
+  Node* comparison() const { return comparison_; }
+  Node* codeBlock() const { return codeBlock_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* comparison_;
+  Node* codeBlock_;
+};
+
 class Assigned final : public Node {
  public:
   explicit Assigned(Node* var, Node* val, int line, int column)
@@ -198,9 +211,35 @@ class AtomExpr final : public Node {
   Node* value_;
 };
 
+class Comparison final : public Node {
+ public:
+  explicit Comparison(Node* lhs, Node* op, Node* rhs, int line, int column)
+      : Node(line, column), lhs_(lhs), op_(op), rhs_(rhs) {}
+  Node* lhs() const { return lhs_; }
+  Node* op() const { return op_; }
+  Node* rhs() const { return rhs_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* lhs_;
+  Node* op_;
+  Node* rhs_;
+};
+
 class Var final : public Node {
  public:
   explicit Var(std::string& name, int line, int column)
+      : Node(line, column), name_(std::move(name)) {}
+  const std::string& name() const { return name_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  std::string name_;
+};
+
+class Condition final : public Node {
+ public:
+  explicit Condition(std::string& name, int line, int column)
       : Node(line, column), name_(std::move(name)) {}
   const std::string& name() const { return name_; }
   void accept(Visitor& visitor) override;

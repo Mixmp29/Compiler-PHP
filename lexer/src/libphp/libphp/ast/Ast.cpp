@@ -24,6 +24,10 @@ void Print::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void IfState::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Assigned::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
@@ -56,7 +60,15 @@ void AtomExpr::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void Comparison::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Var::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
+void Condition::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 

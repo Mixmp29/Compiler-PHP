@@ -18,6 +18,7 @@ class XmlSerializer final : public Visitor {
   void visit(ElementWithColon& value) override;
   void visit(Echo& value) override;
   void visit(Print& value) override;
+  void visit(IfState& value) override;
   void visit(Assigned& value) override;
   void visit(CodeBlock& value) override;
   void visit(OpExpr& value) override;
@@ -26,7 +27,9 @@ class XmlSerializer final : public Visitor {
   void visit(UPrefExpr& value) override;
   void visit(ParenExpr& value) override;
   void visit(AtomExpr& value) override;
+  void visit(Comparison& value) override;
   void visit(Var& value) override;
+  void visit(Condition& value) override;
 
  private:
   pugi::xml_node append_child(const char* name);
