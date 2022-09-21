@@ -2,15 +2,20 @@
     $min = 10000; 
     $numberA = fgets(STDIN);
     $numberB = 21;
+    $i = 0;
 
     if($numberA > $numberB)
     {
-        $numberB = $numberB + 8;
+        while($i < 8)
+        {
+            $numberB = $numberB + 8;   
+        }
     }
     else
     {
         $numberA = $numberA + 8;
     }
+
 
     $numberB = $numberB + 15;
 

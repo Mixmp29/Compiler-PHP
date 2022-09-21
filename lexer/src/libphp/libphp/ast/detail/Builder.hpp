@@ -24,6 +24,7 @@ class Builder final : public PhpParserBaseVisitor {
   std::any visitIfElse(PhpParser::IfElseContext* context) override;
   std::any visitIfState(PhpParser::IfStateContext* context) override;
   std::any visitElseState(PhpParser::ElseStateContext* context) override;
+  std::any visitWhileState(PhpParser::WhileStateContext* context) override;
   std::any visitAssigned(PhpParser::AssignedContext* context) override;
   std::any visitCodeBlock(PhpParser::CodeBlockContext* context) override;
   std::any visitOpExpr(PhpParser::OpExprContext* context) override;

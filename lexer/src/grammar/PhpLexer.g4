@@ -2,9 +2,8 @@ lexer grammar PhpLexer;
 
 PHP: 'php';
 BREAK: 'break';
-FOR: 'for';
+WHILE: 'while';
 ARRAY: 'array';
-FOREACH: 'foreach';
 AS: 'as';
 IF: 'if';
 ELSE: 'else';

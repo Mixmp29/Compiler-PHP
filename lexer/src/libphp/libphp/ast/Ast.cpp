@@ -40,6 +40,10 @@ void ElseState::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
+void WhileState::accept(Visitor& visitor) {
+  visitor.visit(*this);
+}
+
 void Assigned::accept(Visitor& visitor) {
   visitor.visit(*this);
 }

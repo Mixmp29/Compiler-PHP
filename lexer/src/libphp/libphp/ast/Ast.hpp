@@ -141,6 +141,19 @@ class ElseState final : public Node {
   Node* codeBlock_;
 };
 
+class WhileState final : public Node {
+ public:
+  explicit WhileState(Node* comparison, Node* codeBlock, int line, int column)
+      : Node(line, column), comparison_(comparison), codeBlock_(codeBlock) {}
+  Node* comparison() const { return comparison_; }
+  Node* codeBlock() const { return codeBlock_; }
+  void accept(Visitor& visitor) override;
+
+ private:
+  Node* comparison_;
+  Node* codeBlock_;
+};
+
 class Assigned final : public Node {
  public:
   explicit Assigned(Node* var, Node* val, int line, int column)

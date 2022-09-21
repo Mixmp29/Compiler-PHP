@@ -95,6 +95,14 @@ void XmlSerializer::visit(ElseState& value) {
   nodes_.pop();
 }
 
+void XmlSerializer::visit(WhileState& value) {
+  auto code = append_child("while");
+  nodes_.push(code);
+  value.comparison()->accept(*this);
+  value.codeBlock()->accept(*this);
+  nodes_.pop();
+}
+
 void XmlSerializer::visit(StrExpr& value) {
   append_text("(");
   value.lhs()->accept(*this);

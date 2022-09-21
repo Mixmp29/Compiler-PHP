@@ -22,6 +22,7 @@ class XmlSerializer final : public Visitor {
   void visit(IfElse& value) override;
   void visit(IfState& value) override;
   void visit(ElseState& value) override;
+  void visit(WhileState& value) override;
   void visit(Assigned& value) override;
   void visit(CodeBlock& value) override;
   void visit(OpExpr& value) override;

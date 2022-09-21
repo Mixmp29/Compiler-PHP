@@ -8,7 +8,12 @@ document: SBL QM PHP elements QM SBR EOF;
 
 elements: statement*;
 
-statement: colonizedElement | ifElse | ifState | codeBlock;
+statement:
+	colonizedElement
+	| ifElse
+	| ifState
+	| whileState
+	| codeBlock;
 
 colonizedElement: elementWithColon SEMI;
 
@@ -24,6 +29,8 @@ ifElse: ifState elseState;
 ifState: IF LP comparison RP codeBlock;
 
 elseState: ELSE codeBlock;
+
+whileState: WHILE LP comparison RP codeBlock;
 
 assigned: var ASSIGN expr;
 
@@ -49,7 +56,3 @@ id: DOLL ID;
 value: VALUE;
 
 string: STRING;
-
-//Критерии на тройку: -ввод-, -вывод-, цикл, -арифметика-, -переменная-, строки
-
-//На четвеёрку: функция, массив

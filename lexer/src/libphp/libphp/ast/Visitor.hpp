@@ -15,6 +15,7 @@ class Visitor {
   virtual void visit(IfElse& value) = 0;
   virtual void visit(IfState& value) = 0;
   virtual void visit(ElseState& value) = 0;
+  virtual void visit(WhileState& value) = 0;
   virtual void visit(Assigned& value) = 0;
   virtual void visit(CodeBlock& value) = 0;
   virtual void visit(OpExpr& value) = 0;
