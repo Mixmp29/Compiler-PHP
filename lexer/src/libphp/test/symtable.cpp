@@ -22,7 +22,7 @@ void get_symtable_from_stream(std::istream& in, std::ostream& out) {
   php::dump_symtable_errors(errors, out);
 }
 
-TEST(SymTableSuite, Ints) {
+TEST(SymTableSuite, CorrectEx) {
   std::stringstream in(
       "<\?php\n"
       " $min = 10000;\n"
@@ -42,6 +42,29 @@ TEST(SymTableSuite, Ints) {
       "$B   integer\n"
       "$A   string\n"
       "$min   integer\n",
+      out.str());
+}
+
+TEST(SymTableSuite, IncorrectEx) {
+  std::stringstream in(
+      "<\?php\n"
+      " $A = 1;\n"
+      " $B = \"1\";\n"
+      " $F = $A * $B;\n"
+      " $D = 1;\n"
+      " $C = \"2\";\n"
+      " $D = $C;\n"
+      "\?>");
+  std::stringstream out;
+  get_symtable_from_stream(in, out);
+
+  EXPECT_EQ(
+      "$C   string\n"
+      "$D   integer\n"
+      "$F   error\n"
+      "$B   error\n"
+      "$A   integer\n"
+      "4:11 type detection error\n",
       out.str());
 }
 
