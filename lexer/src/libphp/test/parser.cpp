@@ -61,6 +61,8 @@ TEST(ParserSuite, MathExpr) {
   std::stringstream in(
       "<\?php\n"
       " $min = 12 + 32 / 2;\n"
+      " $min++;\n"
+      " $A = $min * 13;\n"
       "\?>");
 
   std::stringstream out;
@@ -72,6 +74,10 @@ TEST(ParserSuite, MathExpr) {
       "<php>\n"
       "  <command>\n"
       "    <assign>$min = (12 + (32 / 2))</assign>\n"
+      "  </command>\n"
+      "  <command>($min++)</command>\n"
+      "  <command>\n"
+      "    <assign>$A = ($min * 13)</assign>\n"
       "  </command>\n"
       "</php>\n");
 }
