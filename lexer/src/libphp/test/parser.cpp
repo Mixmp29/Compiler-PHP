@@ -45,7 +45,7 @@ TEST(ParserSuite, SimleExample) {
       "</php>\n");
 }
 
-TEST(ParserSuite, IfState) {
+TEST(ParserSuite, IfStatement) {
   std::stringstream in(
       "<\?php\n"
       "$numberA = 15;\n"
@@ -77,6 +77,54 @@ TEST(ParserSuite, IfState) {
       "      </command>\n"
       "    </code_block>\n"
       "  </if>\n"
+      "</php>\n");
+}
+
+TEST(ParserSuite, IfElseStatement) {
+  std::stringstream in(
+      "<\?php\n"
+      "$numberA = 15;\n"
+      "$numberB = 21;\n"
+      "if($numberA > $numberB)\n"
+      "{\n"
+      "    $numberB = $numberB + 8;\n"
+      "}\n"
+      "else\n"
+      "{\n"
+      "        $numberA = $numberA + $numberB;\n"
+      "}\n"
+      "\?>\n");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "<?xml version=\"1.0\"?>\n"
+      "<php>\n"
+      "  <command>\n"
+      "    <assign>$numberA = 15</assign>\n"
+      "  </command>\n"
+      "  <command>\n"
+      "    <assign>$numberB = 21</assign>\n"
+      "  </command>\n"
+      "  <if_else_state>\n"
+      "    <if>\n"
+      "      <comparison>$numberA &gt; $numberB</comparison>\n"
+      "      <code_block>\n"
+      "        <command>\n"
+      "          <assign>$numberB = ($numberB + 8)</assign>\n"
+      "        </command>\n"
+      "      </code_block>\n"
+      "    </if>\n"
+      "    <else>\n"
+      "      <code_block>\n"
+      "        <command>\n"
+      "          <assign>$numberA = ($numberA + $numberB)</assign>\n"
+      "        </command>\n"
+      "      </code_block>\n"
+      "    </else>\n"
+      "  </if_else_state>\n"
       "</php>\n");
 }
 

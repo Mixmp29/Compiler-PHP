@@ -36,11 +36,12 @@ TEST(SymTableSuite, Ints) {
   get_symtable_from_stream(in, out);
 
   EXPECT_EQ(
-      "$f\tinteger\n"
-      "$c\tinteger\n"
-      "$b\tinteger\n"
-      "$d\tinteger\n"
-      "$a\tinteger\n",
+      "$i   integer\n"
+      "$D   integer\n"
+      "$C   integer\n"
+      "$B   integer\n"
+      "$A   string\n"
+      "$min   integer\n",
       out.str());
 }
 
