@@ -22,6 +22,7 @@ elementWithColon: echo | print | assigned | expr;
 echo: ECHO expr POINT expr | ECHO POINT expr;
 
 print: PRINT expr;
+
 input: FGETS LP STDIN RP;
 
 ifElse: ifState elseState;

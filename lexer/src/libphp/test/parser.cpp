@@ -37,7 +37,10 @@ TEST(ParserSuite, SimleExample) {
       "<\?xml version=\"1.0\"\?>\n"
       "<php>\n"
       "  <command>\n"
-      "    < assign >10000</ assign >\n"
+      "    <assign>$min = 10000</assign>\n"
+      "  </command>\n"
+      "  <command>\n"
+      "    <print>\"mmm, such crespy ass\"</print>\n"
       "  </command>\n"
       "</php>\n");
 }

@@ -7,7 +7,7 @@ namespace php::ast {
 void XmlSerializer::exec(Document& document, std::ostream& out) {
   XmlSerializer xml_serializer;
   xml_serializer.nodes_.push(xml_serializer.doc_.append_child("php"));
-  document.get_value()->accept(xml_serializer);
+  document.get_node()->accept(xml_serializer);
   xml_serializer.doc_.save(out, "  ");
 }
 

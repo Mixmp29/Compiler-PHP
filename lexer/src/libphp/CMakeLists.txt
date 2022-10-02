@@ -11,14 +11,19 @@ target_sources(
     libphp/ast/Ast.hpp
     libphp/ast/Visitor.hpp
     libphp/ast/XmlSerializer.hpp
+    libphp/ast/SymTableVisitor.hpp
+    libphp/ast/Symbol.hpp
     libphp/dump_tokens.hpp
+    libphp/dump_symtable.hpp
     libphp/parser.hpp
   PRIVATE
     libphp/ast/detail/Builder.cpp
     libphp/ast/detail/Builder.hpp
     libphp/ast/Ast.cpp
     libphp/ast/XmlSerializer.cpp
+    libphp/ast/SymTableVisitor.cpp
     libphp/dump_tokens.cpp
+    libphp/dump_symtable.cpp
     libphp/parser.cpp
 )
 
@@ -49,6 +54,7 @@ target_sources(
   PRIVATE
     test/lexer.cpp
     test/parser.cpp
+    test/symtable.cpp
 )
 
 target_link_libraries(

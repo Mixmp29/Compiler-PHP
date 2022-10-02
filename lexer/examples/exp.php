@@ -1,6 +1,6 @@
 <?php
     $min = 10000; 
-    $numberA = fgets(STDIN);
+    $numberA = 15;
     $numberB = 21;
     $i = 0;
 
@@ -13,13 +13,9 @@
     }
     else
     {
-        $numberA = $numberA + 8;
+        $numberA = $numberA + $numberB;
     }
 
 
     $numberB = $numberB + 15;
-
-    print("He is such good person");
-    echo " Число B равно " . $min;
-
 ?>

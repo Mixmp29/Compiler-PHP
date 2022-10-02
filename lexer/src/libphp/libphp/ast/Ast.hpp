@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>  // <- Чел, убери это
 #include <memory>
 #include <vector>
 
@@ -27,16 +28,16 @@ class Document final {
   template <class T, class... Args>
   T* create_node(Args&&... args) {
     static_assert(std::is_base_of_v<Node, T>);
-    values_.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
-    return dynamic_cast<T*>(values_.back().get());
+    nodes_.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
+    return dynamic_cast<T*>(nodes_.back().get());
   }
 
-  void set_value(ast::Node* value) { value_ = value; }
-  ast::Node* get_value() const { return value_; }
+  void set_value(ast::Node* node) { node_ = node; }
+  ast::Node* get_node() const { return node_; }
 
  private:
-  std::vector<std::unique_ptr<Node>> values_;
-  ast::Node* value_ = nullptr;
+  std::vector<std::unique_ptr<Node>> nodes_;
+  ast::Node* node_ = nullptr;
 };
 
 class Elements final : public Node {

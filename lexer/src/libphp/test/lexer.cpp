@@ -67,49 +67,6 @@ TEST(LexerSuite, MathExpr) {
       "Loc=<1:27>\tVALUE '5'\n");
 }
 
-TEST(LexerSuite, Foreach) {
-  std::stringstream in(
-      "foreach ($arr as &$value) {\n"
-      "    if ($min > $value) :\n"
-      "        $min = $value;\n"
-      "    endif;\n"
-      "}");
-
-  std::stringstream out;
-  dump_tokens_in(in, out);
-
-  EXPECT_EQ(
-      out.str(),
-      "Loc=<1:0>	FOREACH 'foreach'\n"
-      "Loc=<1:8>	LP '('\n"
-      "Loc=<1:9>	DOLL '$'\n"
-      "Loc=<1:10>	ID 'arr'\n"
-      "Loc=<1:14>	AS 'as'\n"
-      "Loc=<1:17>	LINK '&'\n"
-      "Loc=<1:18>	DOLL '$'\n"
-      "Loc=<1:19>	ID 'value'\n"
-      "Loc=<1:24>	RP ')'\n"
-      "Loc=<1:26>	LB '{'\n"
-      "Loc=<2:4>	IF 'if'\n"
-      "Loc=<2:7>	LP '('\n"
-      "Loc=<2:8>	DOLL '$'\n"
-      "Loc=<2:9>	ID 'min'\n"
-      "Loc=<2:13>	SBR '>'\n"
-      "Loc=<2:15>	DOLL '$'\n"
-      "Loc=<2:16>	ID 'value'\n"
-      "Loc=<2:21>	RP ')'\n"
-      "Loc=<2:23>	COLON ':'\n"
-      "Loc=<3:8>	DOLL '$'\n"
-      "Loc=<3:9>	ID 'min'\n"
-      "Loc=<3:13>	ASSIGN '='\n"
-      "Loc=<3:15>	DOLL '$'\n"
-      "Loc=<3:16>	ID 'value'\n"
-      "Loc=<3:21>	SEMI ';'\n"
-      "Loc=<4:4>	ENDIF 'endif'\n"
-      "Loc=<4:9>	SEMI ';'\n"
-      "Loc=<5:0>	RB '}'\n");
-}
-
 TEST(LexerSuite, Array) {
   std::stringstream in(
       "<?php\n"
@@ -148,9 +105,9 @@ TEST(LexerSuite, Array) {
       "Loc=<3:1>	SBR '>'\n");
 }
 
-TEST(LexerSuite, For) {
+TEST(LexerSuite, While) {
   std::stringstream in(
-      "for ($i = 2;; ++$i) {\n"
+      "while ($i < 2) {\n"
       "}");
 
   std::stringstream out;
@@ -158,19 +115,14 @@ TEST(LexerSuite, For) {
 
   EXPECT_EQ(
       out.str(),
-      "Loc=<1:0>	FOR 'for'\n"
-      "Loc=<1:4>	LP '('\n"
-      "Loc=<1:5>	DOLL '$'\n"
-      "Loc=<1:6>	ID 'i'\n"
-      "Loc=<1:8>	ASSIGN '='\n"
-      "Loc=<1:10>	VALUE '2'\n"
-      "Loc=<1:11>	SEMI ';'\n"
-      "Loc=<1:12>	SEMI ';'\n"
-      "Loc=<1:14>	INC '++'\n"
-      "Loc=<1:16>	DOLL '$'\n"
-      "Loc=<1:17>	ID 'i'\n"
-      "Loc=<1:18>	RP ')'\n"
-      "Loc=<1:20>	LB '{'\n"
+      "Loc=<1:0>	WHILE 'while'\n"
+      "Loc=<1:6>	LP '('\n"
+      "Loc=<1:7>	DOLL '$'\n"
+      "Loc=<1:8>	ID 'i'\n"
+      "Loc=<1:10>	SBL '<'\n"
+      "Loc=<1:12>	VALUE '2'\n"
+      "Loc=<1:13>	RP ')'\n"
+      "Loc=<1:15>	LB '{'\n"
       "Loc=<2:0>	RB '}'\n");
 }
 
