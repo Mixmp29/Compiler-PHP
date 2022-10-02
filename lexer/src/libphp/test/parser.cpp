@@ -128,4 +128,34 @@ TEST(ParserSuite, IfElseStatement) {
       "</php>\n");
 }
 
+TEST(ParserSuite, WhileStatement) {
+  std::stringstream in(
+      "<\?php\n"
+      "$i = 0;\n"
+      "while($i < 8)\n"
+      "{\n"
+      "    $numberB = $numberB + 8;\n"
+      "    $i++;\n"
+      "}\n"
+      "\?>");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "<\?xml version=\"1.0\"\?>\n"
+      "<php>\n"
+      "  <command>\n"
+      "    <assign>$i = 0</assign>\n"
+      "  </command>\n"
+      "  <while>\n"
+      "    <comparison>$i &lt; 8</comparison>\n"
+      "    <code_block>\n"
+      "      <command>($i++)</command>\n"
+      "    </code_block>\n"
+      "  </while>\n"
+      "</php>\n");
+}
+
 }  // namespace php::test
