@@ -57,6 +57,25 @@ TEST(ParserSuite, IncorrectExample) {
   EXPECT_EQ(out.str(), "3:0 missing ';' at '?'\n");
 }
 
+TEST(ParserSuite, MathExpr) {
+  std::stringstream in(
+      "<\?php\n"
+      " $min = 12 + 32 / 2;\n"
+      "\?>");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "<?xml version=\"1.0\"?>\n"
+      "<php>\n"
+      "  <command>\n"
+      "    <assign>$min = (12 + (32 / 2))</assign>\n"
+      "  </command>\n"
+      "</php>\n");
+}
+
 TEST(ParserSuite, IfStatement) {
   std::stringstream in(
       "<\?php\n"
