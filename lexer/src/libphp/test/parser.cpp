@@ -80,6 +80,32 @@ TEST(ParserSuite, IfStatement) {
       "</php>\n");
 }
 
+TEST(ParserSuite, CorrectIfStatement) {
+  std::stringstream in(
+      "<\?php\n"
+      "if($numberA > $numberB * 12 - $numberA)\n"
+      "{\n"
+      "    $numberA++;\n"
+      "}\n"
+      "\?>\n");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "<?xml version=\"1.0\"?>\n"
+      "<php>\n"
+      "  <if>\n"
+      "    <comparison>$numberA &gt; (($numberB * 12) - "
+      "$numberA)</comparison>\n"
+      "    <code_block>\n"
+      "      <command>($numberA++)</command>\n"
+      "    </code_block>\n"
+      "  </if>\n"
+      "</php>\n");
+}
+
 TEST(ParserSuite, IfElseStatement) {
   std::stringstream in(
       "<\?php\n"

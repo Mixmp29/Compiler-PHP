@@ -1,13 +1,10 @@
 #pragma once
 
-#include <iostream>  // <- Чел, убери это
 #include <memory>
 #include <vector>
 
 namespace php::ast {
 
-/* class String;
-class Value; */
 class Visitor;
 
 class Node {

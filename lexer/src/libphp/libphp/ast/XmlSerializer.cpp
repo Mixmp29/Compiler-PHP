@@ -12,8 +12,8 @@ void XmlSerializer::exec(Document& document, std::ostream& out) {
 }
 
 void XmlSerializer::visit(Elements& value) {
-  for (const auto& object : value.value()) {
-    object->accept(*this);
+  for (const auto& statement : value.value()) {
+    statement->accept(*this);
   }
 }
 
