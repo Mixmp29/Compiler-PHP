@@ -76,6 +76,29 @@ TEST(ParserSuite, MathExpr) {
       "</php>\n");
 }
 
+TEST(ParserSuite, IncorrectMathExpr) {
+  std::stringstream in(
+      "<\?php\n"
+      "$min = 12 +- 13;\n"
+      "$A = $min / 12;\n"
+      "$B = $A */ 14;\n"
+      "$C = $A$B;\n"
+      "$D = $C 12;\n"
+      "\?>");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "2:11 extraneous input '-' expecting {'fgets', '++', '--', '$', VALUE, "
+      "STRING, '('}\n"
+      "4:9 extraneous input '/' expecting {'fgets', '++', '--', '$', VALUE, "
+      "STRING, '('}\n"
+      "5:7 missing ';' at '$'\n"
+      "6:8 extraneous input '12' expecting ';'\n");
+}
+
 TEST(ParserSuite, IfStatement) {
   std::stringstream in(
       "<\?php\n"
