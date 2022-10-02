@@ -45,6 +45,18 @@ TEST(ParserSuite, SimleExample) {
       "</php>\n");
 }
 
+TEST(ParserSuite, IncorrectExample) {
+  std::stringstream in(
+      "<\?php\n"
+      " $min = 10000\n"
+      "\?>");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(out.str(), "3:0 missing ';' at '?'\n");
+}
+
 TEST(ParserSuite, IfStatement) {
   std::stringstream in(
       "<\?php\n"
@@ -104,6 +116,25 @@ TEST(ParserSuite, CorrectIfStatement) {
       "    </code_block>\n"
       "  </if>\n"
       "</php>\n");
+}
+
+TEST(ParserSuite, IncorrectIfStatement) {
+  std::stringstream in(
+      "<\?php\n"
+      "if($numberA >> $numberB * 12 - $numberA)\n"
+      "{\n"
+      "    $numberA++;\n"
+      "}\n"
+      "\?>\n");
+
+  std::stringstream out;
+  get_ast_from_stream(in, out);
+
+  EXPECT_EQ(
+      out.str(),
+      "2:13 no viable alternative at input 'if($numberA>>'\n"
+      "2:12 mismatched input '>' expecting ')'\n"
+      "2:39 mismatched input ')' expecting ';'\n");
 }
 
 TEST(ParserSuite, IfElseStatement) {
