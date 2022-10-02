@@ -68,11 +68,13 @@ int main(int argc, char** argv) {
       return 1;
     }
 
-    php::ast::SymTable symtable;
-    php::ast::Errors errors;
-    php::create_symtable(parser_result.document_, symtable, errors);
-    php::dump_symtable(symtable, std::cout);
-    php::dump_symtable_errors(errors, std::cout);
+    if (result.count(dump_symtable_opt) > 0) {
+      php::ast::SymTable symtable;
+      php::ast::Errors errors;
+      php::create_symtable(parser_result.document_, symtable, errors);
+      php::dump_symtable(symtable, std::cout);
+      php::dump_symtable_errors(errors, std::cout);
+    }
 
   } catch (const cxxopts::OptionException& e) {
     std::cerr << e.what() << "\n";
