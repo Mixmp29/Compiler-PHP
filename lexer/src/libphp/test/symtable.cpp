@@ -68,4 +68,24 @@ TEST(SymTableSuite, IncorrectEx) {
       out.str());
 }
 
+TEST(SymTableSuite, String) {
+  std::stringstream in(
+      "<\?php\n"
+      " $A = \"str\";\n"
+      " $B = $A;\n"
+      " $D = \"1\";\n"
+      " $C = \"2\";\n"
+      " $D = $C;\n"
+      "\?>");
+  std::stringstream out;
+  get_symtable_from_stream(in, out);
+
+  EXPECT_EQ(
+      "$C   string\n"
+      "$B   string\n"
+      "$D   string\n"
+      "$A   string\n",
+      out.str());
+}
+
 }  // namespace php::test

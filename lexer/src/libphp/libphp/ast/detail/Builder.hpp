@@ -38,7 +38,7 @@ class Builder final : public PhpParserBaseVisitor {
   std::any visitCondition(PhpParser::ConditionContext* context) override;
   std::any visitId(PhpParser::IdContext* context) override;
   std::any visitValue(PhpParser::ValueContext* context) override;
-  std::any visitString(PhpParser::StringContext* context) override;
+  std::any visitStr(PhpParser::StrContext* context) override;
 
  private:
   ast::Document& document_;

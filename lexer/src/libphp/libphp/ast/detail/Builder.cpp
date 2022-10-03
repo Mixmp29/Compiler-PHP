@@ -108,7 +108,7 @@ std::any Builder::visitAssigned(PhpParser::AssignedContext* context) {
 }
 
 std::any Builder::visitCodeBlock(PhpParser::CodeBlockContext* context) {
-  auto* value = std::any_cast<Node*>(visitChildren(context->elements()));
+  auto* value = std::any_cast<Node*>(visit(context->elements()));
   return static_cast<Node*>(document_.create_node<CodeBlock>(
       value,
       context->getStart()->getLine(),
@@ -219,9 +219,9 @@ std::any Builder::visitValue(PhpParser::ValueContext* context) {
       context->getStart()->getCharPositionInLine()));
 }
 
-std::any Builder::visitString(PhpParser::StringContext* context) {
+std::any Builder::visitStr(PhpParser::StrContext* context) {
   auto name = context->getText();
-  return static_cast<Node*>(document_.create_node<String>(
+  return static_cast<Node*>(document_.create_node<Str>(
       name,
       context->getStart()->getLine(),
       context->getStart()->getCharPositionInLine()));

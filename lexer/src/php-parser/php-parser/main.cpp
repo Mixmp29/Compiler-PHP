@@ -1,3 +1,4 @@
+#include <libphp/ast/CodeGen.hpp>
 #include <libphp/dump_symtable.hpp>
 #include <libphp/dump_tokens.hpp>
 #include <libphp/parser.hpp>
@@ -14,6 +15,7 @@ const char* const file_path_opt = "file_path";
 const char* const dump_tokens_opt = "dump-tokens";
 const char* const dump_ast_opt = "dump-ast";
 const char* const dump_symtable_opt = "dump-symtable";
+const char* const dump_asm_opt = "dump-asm";
 
 int main(int argc, char** argv) {
   cxxopts::Options options("php-parser", "ANTLR4 php parser example");
@@ -27,6 +29,7 @@ int main(int argc, char** argv) {
         (dump_tokens_opt, "")
         (dump_ast_opt, "")
         (dump_symtable_opt, "")
+        (dump_asm_opt, "")
         ("h,help", "Print help");
     // clang-format on
   } catch (const cxxopts::OptionSpecException& e) {
@@ -71,9 +74,30 @@ int main(int argc, char** argv) {
     if (result.count(dump_symtable_opt) > 0) {
       php::ast::SymTable symtable;
       php::ast::Errors errors;
+
       php::create_symtable(parser_result.document_, symtable, errors);
       php::dump_symtable(symtable, std::cout);
       php::dump_symtable_errors(errors, std::cout);
+    }
+
+    if (result.count(dump_asm_opt) > 0) {
+      php::ast::SymTable symtable;
+      php::ast::Errors errors;
+
+      php::create_symtable(parser_result.document_, symtable, errors);
+      php::dump_symtable(symtable, std::cout);
+      php::dump_symtable_errors(errors, std::cout);
+
+      std::string out_path = result[file_path_opt].as<std::string>();
+      out_path[out_path.size() - 3] = 'l';
+      out_path[out_path.size() - 2] = 'l';
+      out_path.resize(out_path.size() - 1);
+      std::cout << out_path << "\n";
+
+      std::ofstream ofstr;
+      ofstr.open(out_path);
+      php::ast::CodeGen::exec(parser_result.document_, symtable, ofstr);
+      ofstr.close();
     }
 
   } catch (const cxxopts::OptionException& e) {

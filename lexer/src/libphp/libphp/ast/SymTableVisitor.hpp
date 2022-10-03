@@ -49,7 +49,7 @@ class SymTableVisitor final : public Visitor {
   void visit(Condition& value) override;
   void visit(Id& value) override;
   void visit(Value& value) override;
-  void visit(String& value) override;
+  void visit(Str& value) override;
 
  private:
   void update_symtable(

@@ -1,21 +1,21 @@
 <?php
-    $min = 10000; 
+    $min = 10000;
     $numberA = 15;
     $numberB = 21;
     $i = 0;
 
-    if($numberA > $numberB)
+    if($numberA < $numberB)
     {
-        while($i < 8)
-        {
-            $numberB = $numberB + 8;   
-        }
+        $numberB = $numberB + $NumberA;  
     }
     else
     {
         $numberA = $numberA + $numberB;
+        $numberA = $numberA + 1;
     }
 
 
     $numberB = $numberB + 15;
+
+    print($numberB);
 ?>

@@ -29,7 +29,7 @@ class Visitor {
   virtual void visit(Condition& value) = 0;
   virtual void visit(Id& value) = 0;
   virtual void visit(Value& value) = 0;
-  virtual void visit(String& value) = 0;
+  virtual void visit(Str& value) = 0;
 };
 
 }  // namespace php::ast

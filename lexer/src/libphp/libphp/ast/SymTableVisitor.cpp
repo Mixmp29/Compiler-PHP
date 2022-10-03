@@ -55,7 +55,7 @@ void SymTableVisitor::visit(Assigned& value) {
   value.var()->accept(*this);
 }
 void SymTableVisitor::visit(CodeBlock& value) {
-  value.value()->accept(*this);
+  value.elements()->accept(*this);
 }
 void SymTableVisitor::visit(OpExpr& value) {
   type_handler_.set_integer(value.get_line(), value.get_column());
@@ -108,7 +108,7 @@ void SymTableVisitor::visit(Id& value) {
 void SymTableVisitor::visit(Value& value) {
   type_handler_.set_integer(value.get_line(), value.get_column());
 }
-void SymTableVisitor::visit(String& value) {
+void SymTableVisitor::visit(Str& value) {
   type_handler_.set_string(value.get_line(), value.get_column());
 }
 

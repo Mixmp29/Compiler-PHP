@@ -1,17 +1,23 @@
 #pragma once
 
+#include <libphp/ast/SymTableVisitor.hpp>
 #include <libphp/ast/Visitor.hpp>
 
-#include <pugixml.hpp>
-
 #include <ostream>
+#include <sstream>
 #include <stack>
+#include <unordered_map>
 
 namespace php::ast {
 
-class XmlSerializer final : public Visitor {
+class CodeGen final : public Visitor {
  public:
-  static void exec(Document& document, std::ostream& out);
+  CodeGen(SymTable& symtable, std::ostream& out)
+      : symtable_(symtable), out_(out) {}
+
+  static void exec(Document& document, SymTable& symtable, std::ostream& out);
+
+  void generate();
 
   void visit(Elements& value) override;
   void visit(Statement& value) override;
@@ -39,11 +45,32 @@ class XmlSerializer final : public Visitor {
   void visit(Str& value) override;
 
  private:
-  pugi::xml_node append_child(const char* name);
-  void append_text(const char* text);
+  int pop_value();
+  void push_value(int val);
 
-  pugi::xml_document doc_;
-  std::stack<pugi::xml_node> nodes_;
+  struct GenerateFlags {
+    bool print_string = false;
+    bool print_int = false;
+    bool read_string = false;
+    bool read_int = false;
+    bool string = false;
+  };
+
+  struct States {
+    bool var = false;
+    bool ifelse = false;
+    bool string = false;
+  };
+
+  int var_num_ = 0;
+  GenerateFlags generate_flags_;
+  States states_;
+  std::stack<int> values_;
+  std::unordered_map<std::string, int> ids_;
+  SymTable& symtable_;
+  std::ostream& out_;
+  std::stringstream body_;
+  int else_label_;
 };
 
 }  // namespace php::ast

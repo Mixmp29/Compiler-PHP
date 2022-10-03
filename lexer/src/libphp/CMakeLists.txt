@@ -13,6 +13,7 @@ target_sources(
     libphp/ast/XmlSerializer.hpp
     libphp/ast/SymTableVisitor.hpp
     libphp/ast/Symbol.hpp
+    libphp/ast/CodeGen.hpp
     libphp/dump_tokens.hpp
     libphp/dump_symtable.hpp
     libphp/parser.hpp
@@ -22,6 +23,7 @@ target_sources(
     libphp/ast/Ast.cpp
     libphp/ast/XmlSerializer.cpp
     libphp/ast/SymTableVisitor.cpp
+    libphp/ast/CodeGen.cpp
     libphp/dump_tokens.cpp
     libphp/dump_symtable.cpp
     libphp/parser.cpp

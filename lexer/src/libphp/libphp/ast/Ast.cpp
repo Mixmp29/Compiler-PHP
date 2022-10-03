@@ -96,7 +96,7 @@ void Value::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 
-void String::accept(Visitor& visitor) {
+void Str::accept(Visitor& visitor) {
   visitor.visit(*this);
 }
 

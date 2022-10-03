@@ -48,7 +48,7 @@ expr:
 
 comparison: left = expr condition right = expr;
 
-var: id | value | string | input;
+var: id | value | str | input;
 
 condition: SBL | SBR | SBLE | SBRE | EQ | NE;
 
@@ -56,4 +56,4 @@ id: DOLL ID;
 
 value: VALUE;
 
-string: STRING;
+str: STRING;

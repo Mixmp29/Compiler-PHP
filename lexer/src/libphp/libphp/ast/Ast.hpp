@@ -167,13 +167,13 @@ class Assigned final : public Node {
 
 class CodeBlock final : public Node {
  public:
-  explicit CodeBlock(Node* value, int line, int column)
-      : Node(line, column), value_(value) {}
-  Node* value() const { return value_; }
+  explicit CodeBlock(Node* elements, int line, int column)
+      : Node(line, column), elements_(elements) {}
+  Node* elements() const { return elements_; }
   void accept(Visitor& visitor) override;
 
  private:
-  Node* value_;
+  Node* elements_;
 };
 
 class OpExpr final : public Node {
@@ -282,13 +282,13 @@ class Var final : public Node {
 
 class Condition final : public Node {
  public:
-  explicit Condition(std::string& name, int line, int column)
-      : Node(line, column), name_(std::move(name)) {}
-  const std::string& name() const { return name_; }
+  explicit Condition(std::string& comp, int line, int column)
+      : Node(line, column), comp_(std::move(comp)) {}
+  const std::string& comp() const { return comp_; }
   void accept(Visitor& visitor) override;
 
  private:
-  std::string name_;
+  std::string comp_;
 };
 
 class Id final : public Node {
@@ -304,20 +304,20 @@ class Id final : public Node {
 
 class Value final : public Node {
  public:
-  explicit Value(std::string& name, int line, int column)
-      : Node(line, column), name_(std::move(name)) {}
-  const std::string& name() const { return name_; }
+  explicit Value(std::string integer, int line, int column)
+      : Node(line, column), integer_(std::move(integer)) {}
+  const std::string& integer() const { return integer_; }
   void accept(Visitor& visitor) override;
 
  private:
-  std::string name_;
+  std::string integer_;
 };
 
-class String final : public Node {
+class Str final : public Node {
  public:
-  explicit String(std::string& name, int line, int column)
+  explicit Str(std::string& name, int line, int column)
       : Node(line, column), name_(std::move(name)) {}
-  const std::string& name() const { return name_; }
+  const std::string& text() const { return name_; }
   void accept(Visitor& visitor) override;
 
  private:

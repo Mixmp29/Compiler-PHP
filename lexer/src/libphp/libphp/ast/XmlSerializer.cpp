@@ -12,9 +12,12 @@ void XmlSerializer::exec(Document& document, std::ostream& out) {
 }
 
 void XmlSerializer::visit(Elements& value) {
+  auto code = append_child("elements");
+  nodes_.push(code);
   for (const auto& statement : value.value()) {
     statement->accept(*this);
   }
+  nodes_.pop();
 }
 
 void XmlSerializer::visit(Statement& value) {
@@ -46,32 +49,6 @@ void XmlSerializer::visit(Input& /*value*/) {
   append_text("input");
 }
 
-void XmlSerializer::visit(Assigned& value) {
-  auto code = append_child("assign");
-  nodes_.push(code);
-  value.var()->accept(*this);
-  append_text(" = ");
-  value.val()->accept(*this);
-  nodes_.pop();
-}
-
-void XmlSerializer::visit(CodeBlock& value) {
-  auto code = append_child("code_block");
-  nodes_.push(code);
-  value.value()->accept(*this);
-  nodes_.pop();
-}
-
-void XmlSerializer::visit(OpExpr& value) {
-  append_text("(");
-  value.lhs()->accept(*this);
-  append_text(" ");
-  append_text(value.op().c_str());
-  append_text(" ");
-  value.rhs()->accept(*this);
-  append_text(")");
-}
-
 void XmlSerializer::visit(IfElse& value) {
   auto code = append_child("if_else_state");
   nodes_.push(code);
@@ -101,6 +78,32 @@ void XmlSerializer::visit(WhileState& value) {
   value.comparison()->accept(*this);
   value.codeBlock()->accept(*this);
   nodes_.pop();
+}
+
+void XmlSerializer::visit(Assigned& value) {
+  auto code = append_child("assign");
+  nodes_.push(code);
+  value.var()->accept(*this);
+  append_text(" = ");
+  value.val()->accept(*this);
+  nodes_.pop();
+}
+
+void XmlSerializer::visit(CodeBlock& value) {
+  auto code = append_child("code_block");
+  nodes_.push(code);
+  value.elements()->accept(*this);
+  nodes_.pop();
+}
+
+void XmlSerializer::visit(OpExpr& value) {
+  append_text("(");
+  value.lhs()->accept(*this);
+  append_text(" ");
+  append_text(value.op().c_str());
+  append_text(" ");
+  value.rhs()->accept(*this);
+  append_text(")");
 }
 
 void XmlSerializer::visit(StrExpr& value) {
@@ -151,7 +154,7 @@ void XmlSerializer::visit(Var& value) {
 }
 
 void XmlSerializer::visit(Condition& value) {
-  append_text(value.name().c_str());
+  append_text(value.comp().c_str());
 }
 
 void XmlSerializer::visit(Id& value) {
@@ -159,11 +162,11 @@ void XmlSerializer::visit(Id& value) {
 }
 
 void XmlSerializer::visit(Value& value) {
-  append_text(value.name().c_str());
+  append_text(value.integer().c_str());
 }
 
-void XmlSerializer::visit(String& value) {
-  append_text(value.name().c_str());
+void XmlSerializer::visit(Str& value) {
+  append_text(value.text().c_str());
 }
 
 pugi::xml_node XmlSerializer::append_child(const char* name) {

@@ -36,6 +36,7 @@ struct ParseResult {
 ParseResult parse(PhpLexer& lexer);
 
 void dump_ast(ast::Document& document, std::ostream& out);
+
 void dump_errors(
     const Errors& errors,
     std::ostream& out /*, std::istream& in*/);
