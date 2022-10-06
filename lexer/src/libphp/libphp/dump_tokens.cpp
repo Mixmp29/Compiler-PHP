@@ -1,21 +1,17 @@
 #include <libphp/dump_tokens.hpp>
 
-#include <PHPLexer.h>
 #include <antlr4-runtime.h>
 #include <fmt/format.h>
 
 namespace php {
 
 static std::string_view get_token_type_name(
-    const PHPLexer& lexer,
+    const PhpLexer& lexer,
     const antlr4::Token& token) {
   return lexer.getVocabulary().getSymbolicName(token.getType());
 }
 
-void dump_tokens(std::istream& in, std::ostream& out) {
-  antlr4::ANTLRInputStream stream(in);
-  PHPLexer lexer(&stream);
-
+void dump_tokens(PhpLexer& lexer, std::ostream& out) {
   for (auto token = lexer.nextToken(); token->getType() != antlr4::Token::EOF;
        token = lexer.nextToken()) {
     out << fmt::format(
