@@ -12,8 +12,6 @@ void XmlSerializer::exec(Document& document, std::ostream& out) {
 }
 
 void XmlSerializer::visit(Elements& value) {
-  auto code = append_child("elements");
-  nodes_.push(code);
   for (const auto& statement : value.value()) {
     statement->accept(*this);
   }

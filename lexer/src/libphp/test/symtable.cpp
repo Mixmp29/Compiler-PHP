@@ -82,8 +82,8 @@ TEST(SymTableSuite, String) {
 
   EXPECT_EQ(
       "$C   string\n"
-      "$B   string\n"
       "$D   string\n"
+      "$B   unsetted\n"
       "$A   string\n",
       out.str());
 }
