@@ -18,7 +18,7 @@ const char* const dump_symtable_opt = "dump-symtable";
 const char* const dump_asm_opt = "dump-asm";
 
 int main(int argc, char** argv) {
-  cxxopts::Options options("php-parser", "ANTLR4 php parser example");
+  cxxopts::Options options("php-parser", "ANTLR4 php parser");
 
   options.positional_help("<file_path>");
 
@@ -56,48 +56,55 @@ int main(int argc, char** argv) {
 
     antlr4::ANTLRInputStream antlr_stream(input_stream);
     PhpLexer lexer(&antlr_stream);
+    auto parser_result = php::parse(lexer);
     if (result.count(dump_tokens_opt) > 0) {
       php::dump_tokens(lexer, std::cout);
       return 0;
-    }
-    auto parser_result = php::parse(lexer);
-    if (result.count(dump_ast_opt) > 0) {
+    } else if (result.count(dump_ast_opt) > 0) {
       if (parser_result.errors_.empty()) {
         php::dump_ast(parser_result.document_, std::cout);
       }
-    }
-    if (!parser_result.errors_.empty()) {
+    } else if (!parser_result.errors_.empty()) {
       php::dump_errors(parser_result.errors_, std::cerr);
       return 1;
-    }
-
-    if (result.count(dump_symtable_opt) > 0) {
+    } else if (result.count(dump_symtable_opt) > 0) {
       php::ast::SymTable symtable;
       php::ast::Errors errors;
 
       php::create_symtable(parser_result.document_, symtable, errors);
       php::dump_symtable(symtable, std::cout);
       php::dump_symtable_errors(errors, std::cout);
-    }
-
-    if (result.count(dump_asm_opt) > 0) {
+    } else if (result.count(dump_asm_opt) > 0) {
       php::ast::SymTable symtable;
       php::ast::Errors errors;
 
       php::create_symtable(parser_result.document_, symtable, errors);
       php::dump_symtable(symtable, std::cout);
+      php::dump_symtable_errors(errors, std::cout);
+
+      php::ast::CodeGen::exec(parser_result.document_, symtable, std::cout);
+    } else {
+      php::ast::SymTable symtable;
+      php::ast::Errors errors;
+
+      php::create_symtable(parser_result.document_, symtable, errors);
       php::dump_symtable_errors(errors, std::cout);
 
       std::string out_path = result[file_path_opt].as<std::string>();
       out_path[out_path.size() - 3] = 'l';
       out_path[out_path.size() - 2] = 'l';
       out_path.resize(out_path.size() - 1);
-      std::cout << out_path << "\n";
 
       std::ofstream ofstr;
       ofstr.open(out_path);
       php::ast::CodeGen::exec(parser_result.document_, symtable, ofstr);
       ofstr.close();
+
+      std::string str =
+          "clang-12 --verbose " + out_path + " -o examples/example";
+      const char* command = str.c_str();
+
+      system(command);
     }
 
   } catch (const cxxopts::OptionException& e) {
