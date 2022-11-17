@@ -1,5 +1,0 @@
-digraph D {
- factorial -> factorial
- main -> __isoc99_scanf
- main -> factorial
-}
