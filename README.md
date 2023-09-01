@@ -12,7 +12,7 @@ __Требования:__
 - Clang 6.0.0
 
 __Как скачать:__
-- git clone https://github.com/Compiler2022/compilers-1-Mixmp29.git
+- git clone https://github.com/Mixmp29/Compiler-PHP.git
 
 __Установка:__
 - ./build.sh
