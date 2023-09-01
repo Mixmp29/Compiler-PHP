@@ -14,6 +14,9 @@ __Требования:__
 __Как скачать:__
 - git clone https://github.com/Mixmp29/Compiler-PHP.git
 
+__Расположение проекта:__
+- lexer
+
 __Установка:__
 - ./build.sh
 
